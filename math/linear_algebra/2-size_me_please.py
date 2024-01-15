@@ -6,10 +6,8 @@ The shape should be returned as a list of integers '''
 
 def matrix_shape(matrix):
     rows = matrix
-    result = []
+    shape = []
     while len(rows) > 0:
-        result.append(len(rows))
-        if isinstance(rows[0], int):
-            break
-        rows = rows[0]
-    return result
+        shape.append(len(rows))
+        rows = rows[0] if isinstance(rows[0], list) else []
+    return shape
