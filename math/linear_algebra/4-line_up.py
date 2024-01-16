@@ -11,7 +11,7 @@ If arr1 and arr2 are not the same shape, return None
 def add_arrays(arr1, arr2):
     '''
     This function computes two arrays
-    of the same lengths and returns the sum 
+    of the same lengths and returns the sum
     of the arr[i]s in a new array
     '''
     if len(arr1) != len(arr2):
