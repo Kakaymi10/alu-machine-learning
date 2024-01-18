@@ -15,7 +15,7 @@ def np_elementwise(mat1, mat2):
     This function return addition wises
     '''
     # Element-wise addition
-    sum_result = mat1 + mat2 
+    sum_result = mat1 + mat2
     # Element-wise subtraction
     diff_result = mat1 - mat2
     # Element-wise multiplication
