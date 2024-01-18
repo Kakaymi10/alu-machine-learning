@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import numpy as np
 '''
 Write a function def np_elementwise(mat1, mat2): that performs
 element-wise addition, subtraction, multiplication, and division:
@@ -25,8 +24,7 @@ def np_elementwise(mat1, mat2):
     prod_result = mat1 * mat2
     
     # Element-wise division
-    # Replace elements where mat2 is zero with np.inf
-    quotient_result = np.where(mat2 != 0, mat1 / mat2, np.inf)
+    quotient_result = mat1 / mat2
     
     # Return a tuple containing the results of element-wise operations
     return sum_result, diff_result, prod_result, quotient_result
