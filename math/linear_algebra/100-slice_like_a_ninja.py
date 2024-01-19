@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """
-A function `np_slice(matrix, axes)` that slices the matrix along specified axes.
+A function `np_slice(matrix, axes)` that slices
+the matrix along specified axes.
 """
 
 def np_slice(matrix, axes):
     """
-    A function `np_slice(matrix, axes)` that slices the matrix along specified axes.
+    A function `np_slice(matrix, axes)`
+    that slices the matrix along specified axes.
     """
     slices_matrix = [slice(None) for _ in range(len(matrix.shape))]
 
