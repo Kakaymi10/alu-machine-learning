@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 """
-A function `add_matrices(mat1, mat2)` that adds two matrices.
+A function `add_matrices(mat1, mat2)`
+that adds two matrices.
 """
 
 def add_matrices(mat1, mat2):
     """
     Adds two matrices.
-
     Parameters:
-        mat1 (list or int or float): The first matrix or element.
-        mat2 (list or int or float): The second matrix or element.
-
+    mat1 (list or int or float): The first matrix or element.
+    mat2 (list or int or float): The second matrix or element.
     Returns:
-        list or int or float: The result of matrix addition or the sum of two elements.
-                            Returns None if matrices are not compatible for addition.
+    list or int or float: The result
+    of matrix addition or the sum of two elements.
+    Returns None if matrices are not compatible for addition.
     """
     if isinstance(mat1, list) and isinstance(mat2, list):
         if len(mat1) == len(mat2):
