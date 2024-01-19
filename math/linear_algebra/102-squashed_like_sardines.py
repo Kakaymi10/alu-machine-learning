@@ -7,12 +7,10 @@ that concatenates two matrices along a specific axis
 def matrix_shape(matrix):
     """
     Get the shape of the matrix.
-
     Parameters:
-        matrix (list or int or float): The input matrix.
-
+    matrix (list or int or float): The input matrix.
     Returns:
-        list: The shape of the matrix.
+    list: The shape of the matrix.
     """
     matrix_shape = []
     while type(matrix) is list:
@@ -23,14 +21,14 @@ def matrix_shape(matrix):
 def cat_matrices(mat1, mat2, axis=0):
     """
     Concatenate two matrices along a specific axis.
-
     Parameters:
-        mat1 (list or int or float): The first matrix.
-        mat2 (list or int or float): The second matrix.
-        axis (int, optional): The axis along which the matrices will be concatenated. Default is 0.
-
+    mat1 (list or int or float): The first matrix.
+    mat2 (list or int or float): The second matrix.
+    axis (int, optional): The axis along which the
+    matrices will be concatenated. Default is 0.
     Returns:
-        list or None: The concatenated matrix, or None if matrices are not compatible for concatenation.
+    list or None: The concatenated matrix, or
+    None if matrices are not compatible for concatenation.
     """
     shape1, shape2 = matrix_shape(mat1), matrix_shape(mat2)
 
@@ -47,15 +45,13 @@ def cat_matrices(mat1, mat2, axis=0):
 def recursive_concat(m1, m2, axis=0, current=0):
     """
     Recursively concatenate matrices along the specified axis.
-
     Parameters:
-        m1 (list or int or float): The first matrix.
-        m2 (list or int or float): The second matrix.
-        axis (int): The axis along which the matrices will be concatenated.
-        current (int): The current dimension being processed.
-
+    m1 (list or int or float): The first matrix.
+    m2 (list or int or float): The second matrix.
+    axis (int): The axis along which the matrices will be concatenated.
+    current (int): The current dimension being processed.
     Returns:
-        list: The concatenated matrix.
+    list: The concatenated matrix.
     """
     if axis != current:
         return [recursive_concat(m1[i], m2[i], axis, current + 1) for i in range(len(m1))]
