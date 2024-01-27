@@ -14,4 +14,14 @@ x, y = np.random.multivariate_normal(mean, cov, 2000).T
 y_mean = np.mean(y)
 print("Mean of y =", y_mean)
 x_mean = np.mean(x)
-print("
+print("Mean of x:", x_mean)
+
+# Offset y values
+y += 180
+
+# Scatter plot
+plt.scatter(x, y, c='m')
+plt.title("Men's Height vs Weight")
+plt.xlabel('Height (in)')
+plt.ylabel('Weight (lbs)')
+plt.show()
