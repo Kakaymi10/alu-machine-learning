@@ -1,12 +1,17 @@
+#1/usr/bin/env python3
+"""
+Calculates
+"""
 def poly_derivative(poly):
     """Find the derivative of a polynomial.
 
     Args:
-        poly (list): List of coefficients representing the polynomial.
+    poly (list): List of coefficients representing the polynomial.
 
     Returns:
-        list or None: List of coefficients representing the derivative of the polynomial.
-                      Returns None if input is not a non-empty list.
+        list or None: List of coefficients representing
+the derivative of the polynomial.
+               Returns None if input is not a non-empty list.
     """
     # Check if poly is a non-empty list
     if not isinstance(poly, list) or not poly:
