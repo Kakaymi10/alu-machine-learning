@@ -2,6 +2,8 @@
 """
 Calculates
 """
+
+
 def poly_derivative(poly):
     """Find the derivative of a polynomial.
 
