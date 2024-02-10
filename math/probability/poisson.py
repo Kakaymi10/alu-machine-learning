@@ -1,4 +1,4 @@
-#!/usr/bin/env pyithon3
+#!/usr/bin/env python3
 """
 Poisson s lambtha
 """
