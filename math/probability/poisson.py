@@ -1,5 +1,5 @@
-
 #!/usr/bin/env python3
+import math
 """
 Poisson s lambtha
 """
@@ -25,10 +25,20 @@ class Poisson:
         # Check if lambtha is positive
         if self.lambtha <= 0:
             raise ValueError("lambtha must be a positive value")
+        self.expo = 2.7182818285
+        self.pi = 3.1415926536
+
+    def factorial(self, k):
+        #Calculates the factorial
+        if k < 0:
+            return 0
+        if k == 0 or k == 1:
+            return 1
+        return k * self.factorial(k - 1)
 
     def pmf(self, k):
         k = int(k)
         if k < 0:
             return 0  # If k is negative, return 0
         else:
-            return math.exp(-self.lambtha) * (self.lambtha ** k) / math.factorial(k)
+            return (self.expo**(-self.lambtha) * (self.lambtha ** k)) / self.factorial(k)
