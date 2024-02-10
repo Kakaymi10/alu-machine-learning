@@ -6,7 +6,7 @@ Poisson s lambtha
 
 class Poisson:
     """
-	Poisson class
+    Poisson class
     """
     def __init__(self, data=None, lambtha=1.):
         # Check if data is provided
