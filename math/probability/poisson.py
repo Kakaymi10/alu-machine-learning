@@ -40,5 +40,5 @@ class Poisson:
         if k < 0:
             return 0  # If k is negative, return 0
         else:
-            numeator = (self.expo**(-self.lambtha) * (self.lambtha ** k))
+            numerator = (self.expo**(-self.lambtha) * (self.lambtha ** k))
             return numerator / self.factorial(k)
