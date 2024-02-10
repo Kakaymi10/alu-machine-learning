@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-import math
+#!/usr/bin/env pyithon3
 """
 Poisson s lambtha
 """
