@@ -28,7 +28,7 @@ class Poisson:
         self.pi = 3.1415926536
 
     def factorial(self, k):
-        #Calculates the factorial
+        # Calculates the factorial
         if k < 0:
             return 0
         if k == 0 or k == 1:
@@ -40,4 +40,5 @@ class Poisson:
         if k < 0:
             return 0  # If k is negative, return 0
         else:
-            return (self.expo**(-self.lambtha) * (self.lambtha ** k)) / self.factorial(k)
+            numeator = (self.expo**(-self.lambtha) * (self.lambtha ** k))
+            return numerator / self.factorial(k)
