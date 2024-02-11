@@ -36,6 +36,7 @@ class Poisson:
         return k * self.factorial(k - 1)
 
     def pmf(self, k):
+        # calculates the probabilti mass function of a poison dist
         k = int(k)
         if k < 0:
             return 0  # If k is negative, return 0
