@@ -9,7 +9,9 @@ class Poisson:
     Poisson class
     """
     def __init__(self, data=None, lambtha=1.):
-        # Check if data is provided
+        '''
+        Check if data is provided
+        '''
         if data is None:
             # If not, use the provided lambtha
             self.lambtha = float(lambtha)
@@ -28,7 +30,9 @@ class Poisson:
         self.pi = 3.1415926536
 
     def factorial(self, k):
-        # Calculates the factorial of a number for the pmf
+        '''
+        Calculates the factorial of a number for the pmf
+        '''
         if k < 0:
             return 0
         if k == 0 or k == 1:
@@ -36,7 +40,9 @@ class Poisson:
         return k * self.factorial(k - 1)
 
     def pmf(self, k):
-        # calculates the probabilti mass function of a poison dist
+        '''
+        calculates the probabilti mass function of a poison dist
+        '''
         k = int(k)
         if k < 0:
             return 0  # If k is negative, return 0
