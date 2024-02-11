@@ -4,7 +4,7 @@ Binomial distribution class.
 '''
 
 
-class BinomialDistribution:
+class Binomial:
     '''
     Binomial distribution class.
     '''
