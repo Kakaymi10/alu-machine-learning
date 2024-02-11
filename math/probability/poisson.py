@@ -49,3 +49,17 @@ class Poisson:
         else:
             numerator = (self.expo**(-self.lambtha) * (self.lambtha ** k))
             return numerator / self.factorial(k)
+
+    def cdf(self, k):
+        '''
+        calcuates the cdf of a poison distrubtion
+        '''
+        k = int(k)
+        if k < 0:
+            return 0
+        cdf = 0
+        for i in range(k+1):
+            cdf += self.pmf(1)
+        return cdf
+        
+       
