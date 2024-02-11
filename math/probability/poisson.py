@@ -28,7 +28,7 @@ class Poisson:
         self.pi = 3.1415926536
 
     def factorial(self, k):
-        # Calculates the factorial
+        # Calculates the factorial of a number for the pmf
         if k < 0:
             return 0
         if k == 0 or k == 1:
