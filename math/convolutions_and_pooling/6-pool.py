@@ -1,29 +1,35 @@
 #!/usr/bin/env python3
-""" convolutions"""
+'''
+ performs a pooling on images:
+    mode: max or avg
+'''
+
+
 import numpy as np
 
 
-def convolve(images, kernels, padding='same', stride=(1, 1)):
-    """ convolve with multiple filters"""
-    kh, kw, kc, nc = kernels.shape
-    m, hm, wm, cm = images.shape
+def pool(images, kernel_shape, stride, mode='max'):
+    '''
+        images: numpy.ndarray with shape (m, h, w, c)
+        Returns: numpy.ndarray containing the pooled images
+    '''
+    m, height, width, c = images.shape
+    kh, kw = kernel_shape
     sh, sw = stride
-    if padding == 'same':
-        ph = int(((hm - 1) * sh + kh - hm) / 2) + 1
-        pw = int(((wm - 1) * sw + kw - wm) / 2) + 1
-    elif padding == 'valid':
-        ph = 0
-        pw = 0
-    else:
-        ph, pw = padding
-    padded = np.pad(images, ((0, 0), (ph, ph), (pw, pw), (0, 0)), 'constant')
-    ch = int((hm + 2 * ph - kh) / sh) + 1
-    cw = int((wm + 2 * pw - kw) / sw) + 1
-    convoluted = np.zeros((m, ch, cw, nc))
-    for c in range(nc):
-        for h in range(ch):
-            for w in range(cw):
-                square = padded[:, h * sh: h * sh + kh, w * sw: w * sw + kw, :]
-                insert = np.sum(square * kernels[..., c], axis=(1, 2, 3))
-                convoluted[:, h, w, c] = insert
-    return convoluted
+
+    ph = ((height - kh) // sh) + 1
+    pw = ((width - kw) // sw) + 1
+    pooled = np.zeros((m, ph, pw, c))
+
+    for i, h in enumerate(range(0, (height - kh + 1), sh)):
+        for j, w in enumerate(range(0, (width - kw + 1), sw)):
+            if mode == 'max':
+                output = np.max(images[:, h:h + kh, w:w + kw, :], axis=(1, 2))
+            elif mode == 'avg':
+                output = np.average(images[:, h:h + kh, w:w + kw, :],
+                                    axis=(1, 2))
+            else:
+                pass
+            pooled[:, i, j, :] = output
+
+    return pooled
