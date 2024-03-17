@@ -1,11 +1,4 @@
-#!/usr/bin/env python3
-"""
-This module contains a class representing a
-Multivariate Normal distribution.
-"""
-
 import numpy as np
-
 
 class MultiNormal:
     """
@@ -16,16 +9,15 @@ class MultiNormal:
         Initialize the MultiNormal instance.
 
         Args:
-            data (numpy.ndarray): The input dataset of shape (d, n), where
-            n is the number of data points
+            data (numpy.ndarray): The input dataset of shape (d, n), where n is the number of data points
                                   and d is the number of dimensions in each data point.
         """
         if not isinstance(data, np.ndarray) or data.ndim != 2:
             raise TypeError("data must be a 2D numpy.ndarray")
-        n, d = data.shape
+        d, n = data.shape
         if n < 2:
             raise ValueError("data must contain multiple data points")
-
+        
         self.mean = np.mean(data, axis=1, keepdims=True)
         centered_data = data - self.mean
         self.cov = np.dot(centered_data, centered_data.T) / (n - 1)
@@ -35,8 +27,7 @@ class MultiNormal:
         Calculate the Probability Density Function (PDF) at a data point.
 
         Args:
-            x (numpy.ndarray): The data point of shape (d, 1),
-            where d is the number of dimensions.
+            x (numpy.ndarray): The data point of shape (d, 1), where d is the number of dimensions.
 
         Returns:
             float: The value of the PDF.
