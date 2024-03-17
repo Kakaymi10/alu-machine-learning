@@ -50,9 +50,8 @@ class MultiNormal:
 
         d = self.mean.shape[0]
         normalization = 1 / np.sqrt((2 * np.pi) ** d * np.linalg.det(self.cov))
-        a = np.linalg.inv(self.cov)
-        b = (x - self.mean)
-        exponent = -0.5 * np.dot(np.dot((x - self.mean).T, a, b))
+        diff = x - self.mean
+        exponent = -0.5 * np.dot(np.dot(difference.T, np.linalg.inv(self.cov)), diff)
 
         pdf_value = normalization * np.exp(exponent)
 
