@@ -37,4 +37,3 @@ By the end of this project, you should be able to:
 
 Through these tasks, we aim to deepen our understanding of multivariate probability and its practical implications in data analysis and modeling.
 
-**Note:** This project will span from March 3, 2024, to March 17, 2024. Let's dive deep into the fascinating world of multivariate probability!
