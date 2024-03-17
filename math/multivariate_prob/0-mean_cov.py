@@ -12,9 +12,9 @@ def mean_cov(X):
     Calculate the mean and covariance of a dataset.
 
     Args:
-        X (numpy.ndarray): The input dataset of shape (n, d), 
+        X (numpy.ndarray): The input dataset of shape (n, d),
         where n is the number of data points
-                           and d is the number of dimensions 
+                           and d is the number of dimensions
                            in each data point.
 
     Returns:
