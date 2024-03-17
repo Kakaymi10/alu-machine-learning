@@ -32,27 +32,16 @@ class MultiNormal:
         self.cov = np.dot(centered_data, centered_data.T) / (n - 1)
 
     def pdf(self, x):
-        """
-        Calculate the Probability Density Function (PDF) at a data point.
-
-        Args:
-            x (numpy.ndarray): The data point of shape (d, 1), where
-            d is the number of dimensions.
-
-        Returns:
-            float: The value of the PDF.
-        """
-        if not isinstance(x, np.ndarray):
+        """ calculate a PDF"""
+        if type(x) is not np.ndarray:
             raise TypeError("x must be a numpy.ndarray")
-        if x.shape != (self.mean.shape[0], 1):
-            raise ValueError("x must have the shape ({}, 1)"
-                             .format(self.mean.shape[0]))
-
-        d = self.mean.shape[0]
-        normalization = 1 / np.sqrt((2 * np.pi) ** d * np.linalg.det(self.cov))
-        diff = x - self.mean
-        exponent = -0.5 * np.dot(np.dot(difference.T, np.linalg.inv(self.cov)), diff)
-
-        pdf_value = normalization * np.exp(exponent)
-
-        return pdf_value
+        d = self.cov.shape[0]
+        if len(x.shape) != 2 or x.shape != (d, 1):
+            raise ValueError('x must have the shape ({}, 1)'.format(d))
+        m = self.mean
+        cov = self.cov
+        bottom = np.sqrt(((2 * np.pi) ** d) * (np.linalg.det(cov)))
+        inv = np.linalg.inv(cov)
+        exp = (-.5 * np.matmul(np.matmul((x - m).T, inv), (x - m)))
+        result = (1 / bottom) * np.exp(exp[0][0])
+        return result
