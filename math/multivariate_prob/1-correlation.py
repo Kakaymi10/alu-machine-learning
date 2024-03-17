@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-This module contains a function to calculate 
+This module contains a function to calculate
 the correlation matrix.
 """
 

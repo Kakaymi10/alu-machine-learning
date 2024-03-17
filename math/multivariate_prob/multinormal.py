@@ -16,13 +16,14 @@ class MultiNormal:
         Initialize the MultiNormal instance.
 
         Args:
-            data (numpy.ndarray): The input dataset of shape (d, n), where
-            n is the number of data points
-                                  and d is the number of dimensions in each data point.
+            data (numpy.ndarray): The input dataset of shape (d, n),
+            where n is the number of data points
+                                  and d is the number
+                                  of dimensions in each data point.
         """
         if not isinstance(data, np.ndarray) or data.ndim != 2:
             raise TypeError("data must be a 2D numpy.ndarray")
-        n, d = data.shape
+        d, n = data.shape
         if n < 2:
             raise ValueError("data must contain multiple data points")
 
@@ -31,24 +32,16 @@ class MultiNormal:
         self.cov = np.dot(centered_data, centered_data.T) / (n - 1)
 
     def pdf(self, x):
-        """
-        Calculate the Probability Density Function (PDF) at a data point.
-
-        Args:
-            x (numpy.ndarray): The data point of shape (d, 1),
-            where d is the number of dimensions.
-
-        Returns:
-            float: The value of the PDF.
-        """
-        if not isinstance(x, np.ndarray):
+        """ calculate a PDF"""
+        if type(x) is not np.ndarray:
             raise TypeError("x must be a numpy.ndarray")
-        if x.shape != (self.mean.shape[0], 1):
-            raise ValueError(f"x must have the shape ({self.mean.shape[0]}, 1)")
-
-        d = self.mean.shape[0]
-        normalization = 1 / np.sqrt((2 * np.pi) ** d * np.linalg.det(self.cov))
-        exponent = -0.5 * np.dot(np.dot((x - self.mean).T, np.linalg.inv(self.cov)), (x - self.mean))
-        pdf_value = normalization * np.exp(exponent)
-
-        return pdf_value
+        d = self.cov.shape[0]
+        if len(x.shape) != 2 or x.shape != (d, 1):
+            raise ValueError('x must have the shape ({}, 1)'.format(d))
+        m = self.mean
+        cov = self.cov
+        bottom = np.sqrt(((2 * np.pi) ** d) * (np.linalg.det(cov)))
+        inv = np.linalg.inv(cov)
+        exp = (-.5 * np.matmul(np.matmul((x - m).T, inv), (x - m)))
+        result = (1 / bottom) * np.exp(exp[0][0])
+        return result
