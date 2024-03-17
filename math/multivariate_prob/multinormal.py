@@ -1,4 +1,11 @@
+#!/usr/bin/env python3
+"""
+This module contains a class representing a
+Multivariate Normal distribution.
+"""
+
 import numpy as np
+
 
 class MultiNormal:
     """
