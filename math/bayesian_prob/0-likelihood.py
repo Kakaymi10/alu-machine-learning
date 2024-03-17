@@ -41,8 +41,8 @@ def likelihood(x, n, P):
         raise TypeError("P must be a 1D numpy.ndarray")
     if np.any((P < 0) | (P > 1)):
         raise ValueError("All values in P must be in the range [0, 1]")
-    b = np.math.factorial(n - x))
-    binomial_coeff = np.math.factorial(n) / (np.math.factorial(x) * b
+
+    binomial_coeff = np.math.factorial(n) / (np.math.factorial(x) * np.math.factorial(n - x))
     likelihoods = binomial_coeff * np.power(P, x) * np.power(1 - P, n - x)
 
     return likelihoods
