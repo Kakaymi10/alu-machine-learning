@@ -15,8 +15,7 @@ This repository contains the solution for the Optimization with Multiple Variabl
   
 **API Endpoint:**
 ## FastAPI Endpoint:
-The FastAPI application provides an endpoint for predictions. It can be accessed at `[https://sales-predictor.onrender.com/docs#/](https://sales-predictor.onrender.com/docs#/)`
-  
+The FastAPI application provides an endpoint for predictions. It can be accessed at (https://sales-predictor.onrender.com/docs#/)
 **Video Demo:**
 ## Video Demonstration:
 **Video demonstration of the mobile app predicting TV sales:** [Demo Video](https://yourdomain.com/demo_video.mp4)
