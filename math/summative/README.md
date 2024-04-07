@@ -11,7 +11,7 @@ This repository contains the solution for the Optimization with Multiple Variabl
 
 **API Endpoint:**
 ## FastAPI Endpoint:
-The FastAPI application provides an endpoint for predictions. It can be accessed on [Swagger](https://sales-predictor.onrender.com/docs#/) or [Postman](https://sales-predictor.onrender.com/predict).
+The FastAPI application provides an endpoint for predictions. It can be accessed on [Swagger](https://sales-predictor.onrender.com/docs#/) or link for Postma ```https://sales-predictor.onrender.com/predict```
 
 ## Example Input and Output:
 As an example, the following input-output pairs can be used:
