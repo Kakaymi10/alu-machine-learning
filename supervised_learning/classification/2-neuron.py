@@ -56,11 +56,11 @@ class Neuron:
 
     @property
     def A(self):
-        self.__A
+        return self.__A
 
     @W.setter
     def A(self, value):
-        return self.__A = value
+        self.__A = value
 
     def forward_prop(self, X):
         """
