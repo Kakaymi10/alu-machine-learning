@@ -58,7 +58,7 @@ class Neuron:
     def A(self):
         return self.__A
 
-    @W.setter
+    @A.setter
     def A(self, value):
         self.__A = value
 
