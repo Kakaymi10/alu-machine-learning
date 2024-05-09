@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Neural Class
+"""
+
 
 import numpy as np
 
@@ -26,7 +30,7 @@ class Neuron:
         """
         if type(nx) != int:
             raise TypeError('nx must be an integer')
-        if nx < 0:
+        if nx < 1:
             raise ValueError('nx must be a positive integer')
         self.nx = nx
         self.W = np.random.randn(1, nx)
