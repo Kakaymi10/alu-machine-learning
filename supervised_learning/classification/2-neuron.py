@@ -56,7 +56,7 @@ class Neuron:
 
     @property
     def A(self):
-        return self.__A
+        return np.copy(self.__A)
 
     @A.setter
     def A(self, value):
