@@ -60,7 +60,7 @@ class Neuron:
 
     @A.setter
     def A(self, value):
-        self.__A = np.copy(value)
+        self.__A = value
 
     def forward_prop(self, X):
         """
