@@ -56,11 +56,7 @@ class Neuron:
 
     @property
     def A(self):
-        return np.copy(self.__A)
-
-    @A.setter
-    def A(self, value):
-        self.__A = value
+        return self.__A
 
     def forward_prop(self, X):
         """
@@ -73,5 +69,6 @@ class Neuron:
         numpy.ndarray - The activated output of the neuron.
         """
         Z = np.dot(self.W, X) + self.b
-        self.A = 1 / (1 + np.exp(-Z))
-        return self.A
+        sigmoid = 1 / (1 + np.exp(-Z))
+        self.__A = sigmoid
+        return self.__A
