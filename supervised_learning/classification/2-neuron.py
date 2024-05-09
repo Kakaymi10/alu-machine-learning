@@ -44,7 +44,7 @@ class Neuron:
 
     @W.setter
     def W(self, value):
-        return self.__W = value
+        self.__W = value
 
     @property
     def b(self):
@@ -52,11 +52,11 @@ class Neuron:
 
     @b.setter
     def b(self, value):
-        return self.__b = value
+        self.__b = value
 
     @property
     def A(self):
-        return self.__A
+        self.__A
 
     @W.setter
     def A(self, value):
