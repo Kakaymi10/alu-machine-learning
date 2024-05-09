@@ -6,6 +6,7 @@ Neural Class
 
 import numpy as np
 
+
 class Neuron:
     """
     Neuron class represents a single neuron in a neural network.
