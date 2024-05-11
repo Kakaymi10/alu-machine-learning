@@ -84,5 +84,5 @@ class Neuron:
         Returns:
         float: Cross-entropy loss.
         """
-        log_loss = -(Y) * np.log(A) -(1-Y)*np.log(1-A)
+        log_loss = -(Y) * np.log(A) -(1-Y)*np.log(1.0000001-A)
         return log_loss
