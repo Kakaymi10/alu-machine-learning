@@ -72,36 +72,3 @@ class Neuron:
         sigmoid = 1 / (1 + np.exp(-Z))
         self.__A = sigmoid
         return self.__A
-
-    def cost(self, Y, A):
-        """
-        Calculate the cross-entropy loss function.
-
-        Parameters:
-        Y (numpy array): Ground truth labels, shape (1, m).
-        A (numpy array): Predicted probabilities, shape (1, m).
-
-        Returns:
-        float: Cross-entropy loss.
-        """
-        log_loss_arr = -(Y)*np.log(A) - (1-Y)*np.log(1.0000001-A)
-        sum = np.sum(log_loss_arr)
-        length = log_loss_arr.size
-        cost = sum / length
-        return cost
-    def evaluate(X, Y):
-        """
-        Evaluate the model's predictions and cost on given input data.
-
-        Parameters:
-        X (numpy array): Input data, shape (input_size, m).
-        Y (numpy array): Ground truth labels, shape (1, m).
-
-        Returns:
-        str: A formatted string containing labelized predictions and cost.
-        """
-        class_prediction = self.forward_prop(X)
-        cost = self.cost(class_prediction, Y)
-        # Labelize the predictions: if prediction < 0.5, set to 0; else, set to 1
-        labelized = np.where(class_prediction < 0.5, 0, 1)
-        return f"{labelized}\n{cost}"
