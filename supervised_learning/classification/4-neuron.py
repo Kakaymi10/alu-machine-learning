@@ -84,7 +84,6 @@ class Neuron:
         Returns:
         float: Cross-entropy loss.
         """
-        epsilon = 1e-10
         log_loss_arr = -(Y)*np.log(A) - (1-Y)*np.log(1.0000001-A)
         sum = np.sum(log_loss_arr)
         length = log_loss_arr.size
@@ -103,8 +102,6 @@ class Neuron:
         str: A formatted string containing labelized predictions and cost.
         """
         class_prediction = self.forward_prop(X)
-        epsilon = 1e-10
-        class_prediction = np.clip(class_prediction, epsilon, 1-epsilon)
         cost = self.cost(Y, class_prediction)
         # Labelize the predictions: if prediction < 0.5, set to 0; else, set to 1
         labelized = np.where(class_prediction < 0.5, 0, 1)
