@@ -73,9 +73,9 @@ class Neuron:
         self.__A = sigmoid
         return self.__A
 
-   def cost(self, Y, A):
-       """
-       Calculate the cross-entropy loss function.
+    def cost(self, Y, A):
+        """
+        Calculate the cross-entropy loss function.
 
         Parameters:
         Y (numpy array): Ground truth labels, shape (1, m).
@@ -83,6 +83,6 @@ class Neuron:
 
         Returns:
         float: Cross-entropy loss.
-       """
-       log_loss = -(Y) * np.log(X) -(1-Y)*np.log(1-X)
-       return log_loss
+        """
+        log_loss = -(Y) * np.log(X) -(1-Y)*np.log(1-X)
+        return log_loss
