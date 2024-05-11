@@ -102,6 +102,8 @@ class Neuron:
         str: A formatted string containing labelized predictions and cost.
         """
         class_prediction = self.forward_prop(X)
+        epsilon = 1e-10
+        class_prediction = np.clip(class_precition, epsilon, 1-epsilon)
         cost = self.cost(class_prediction, Y)
         # Labelize the predictions: if prediction < 0.5, set to 0; else, set to 1
         labelized = np.where(class_prediction < 0.5, 0, 1)
