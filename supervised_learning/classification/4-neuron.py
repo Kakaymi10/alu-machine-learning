@@ -85,7 +85,7 @@ class Neuron:
         float: Cross-entropy loss.
         """
         epsilon = 1e-10
-        log_loss_arr = -(Y)*np.log(np.clip(A, epsilon, 1-epsilon)) - (1-Y)*np.log(np.clip(1.0000001-A, epsilon, 1-epsilon))
+        log_loss_arr = -(Y)*np.log(A) - (1-Y)*np.log(1.0000001-A)
         sum = np.sum(log_loss_arr)
         length = log_loss_arr.size
         cost = sum / length
