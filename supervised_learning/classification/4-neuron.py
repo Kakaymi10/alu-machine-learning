@@ -90,7 +90,7 @@ class Neuron:
         cost = sum / length
         return cost
 
-    def evaluate(X, Y):
+    def evaluate(self, X, Y):
         """
         Evaluate the model's predictions and cost on given input data.
 
