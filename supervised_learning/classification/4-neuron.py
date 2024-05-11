@@ -108,4 +108,4 @@ class Neuron:
         cost = self.cost(class_prediction, Y)
         # Labelize the predictions: if prediction < 0.5, set to 0; else, set to 1
         labelized = np.where(class_prediction < 0.5, 0, 1)
-        return "{}\n{}".format(labelized, cost)
+        return (labelized, cost)
