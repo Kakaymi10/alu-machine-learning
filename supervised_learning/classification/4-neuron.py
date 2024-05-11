@@ -103,6 +103,7 @@ class Neuron:
         """
         class_prediction = self.forward_prop(X)
         cost = self.cost(Y, class_prediction)
-        # Labelize the predictions: if prediction < 0.5, set to 0; else, set to 1
+        # Labelize the predictions:
+        # if prediction < 0.5, set to 0; else, set to 1
         labelized = np.where(class_prediction < 0.5, 0, 1)
         return (labelized, cost)
