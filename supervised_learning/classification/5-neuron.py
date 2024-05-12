@@ -103,11 +103,11 @@ class Neuron:
     def gradient_descent(self, X, Y, A, alpha=0.05):
         """
         Perform one pass of gradient descent on the neuron.
-        
         Arguments:
         - X: numpy.ndarray with shape (nx, m) containing the input data.
         - Y: numpy.ndarray with shape (1, m) containing the correct labels.
-        - A: numpy.ndarray with shape (1, m) containing the activated output of the neuron for each example.
+        - A: numpy.ndarray with shape (1, m) containing the activated output
+        of the neuron for each example.
         - alpha: float representing the learning rate (default is 0.05).
         """
         diff = A - Y
