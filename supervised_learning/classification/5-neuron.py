@@ -110,7 +110,7 @@ class Neuron:
 
     def gradient_descent(self, X, Y, A, alpha=0.05):
         diff = A - Y
-        dcost_w1 = np.dot((X, diff.T) / np.size(A)
-        dcost_b1 = np.sum(diff) / np.size(A)
+        dcost_dw1 = np.dot(X, diff.T) / np.size(A)
+        dcost_db1 = np.sum(diff) / np.size(A)
         self.__W -= (alpha)*(dcost_dw1.T)
         self.__b -= (alpha)*(dcost_db1)
