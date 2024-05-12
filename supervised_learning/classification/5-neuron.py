@@ -42,17 +42,9 @@ class Neuron:
     def W(self):
         return self.__W
 
-    @W.setter
-    def W(self, value):
-        self.__W = value
-
     @property
     def b(self):
         return self.__b
-
-    @b.setter
-    def b(self, value):
-        self.__b = value
 
     @property
     def A(self):
