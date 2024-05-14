@@ -5,6 +5,7 @@ Neural Class
 
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Neuron:
@@ -116,7 +117,7 @@ class Neuron:
         self.__W -= (alpha)*(dcost_dw1.T)
         self.__b -= (alpha)*(dcost_db1)
 
-    def train(self, X, Y, iterations=5000, alpha=0.05):
+    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, setp=100):
         """
         Trains the neuron using gradient descent.
 
@@ -142,10 +143,35 @@ class Neuron:
         if alpha <= 0:
             raise ValueError('alpha must be positive')
 
+        # Check if step is an integer, positive, and less than or equal to iterations
+        if not isinstance(step, int):
+            raise TypeError("step must be an integer")
+        if step <= 0 or step > iterations:
+            raise ValueError("step must be positive and <= iterations")
+            
+        costs = []
         # Iterate over the specified number of iterations
-        for i in range(iterations):
+        for iteration in range(iterations):
             # Forward propagate to calculate the activated output
             A = self.forward_prop(X)
+
+            # Calculate cost and store for plotting
+            cost = self.cost(Y, A)
+            costs.append(cost)
+     
             self.gradient_descent(X, Y, A, alpha)
+
+            # Print verbose information every 'step' iterations
+            if verbose and i % step == 0:
+                print(f"Cost after {i} iterations: {cost}")
+
+        # Plot training cost if graph is True
+        if graph:
+            plt.plot(range(0, iterations + 1, step), costs, 'b-')
+            plt.xlabel('Iteration')
+            plt.ylabel('Cost')
+            plt.title('Training Cost')
+            plt.show()
+
         # Evaluate the model on the training data
         return self.evaluate(X, Y)
