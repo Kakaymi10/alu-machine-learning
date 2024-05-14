@@ -123,7 +123,8 @@ class Neuron:
         Args:
             X (numpy.ndarray): Input data with shape (nx, m).
             Y (numpy.ndarray): Correct labels with shape (1, m).
-            iterations (int): Number of iterations for training (default is 5000).
+            iterations (int): Number of iterations for
+            training (default is 5000).
             alpha (float): Learning rate (default is 0.05).
 
         Returns:
@@ -148,4 +149,3 @@ class Neuron:
             self.gradient_descent(X, Y, A, alpha)
         # Evaluate the model on the training data
         return self.evaluate(X, Y)
-        
