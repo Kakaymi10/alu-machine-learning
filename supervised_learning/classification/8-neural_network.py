@@ -8,6 +8,10 @@ import numpy as np
 
 
 class NeuralNetwork:
+    """
+    A class that  represents a neural network.
+    """
+
     def __init__(self, nx, nodes):
         """
         A class that  represents a neural network.
