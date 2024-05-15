@@ -64,12 +64,12 @@ class NeuralNetwork:
         Calculates the forward propagation of the
         neural network
         '''
-        #first forward
+        # first forward
         Z1 = np.dot(self.W1, X) + self.b1
         sigmoid1 = 1 / (1 + np.exp(-Z1))
         self.__A1 = sigmoid1
 
-        #second forward
+        # second forward
         Z2 = np.dot(self.W2, self.A1) + self.b2
         sigmoid2 = 1 / (1 + np.exp(-Z2))
         self.__A2 = sigmoid2
