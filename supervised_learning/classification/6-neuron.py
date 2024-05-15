@@ -117,7 +117,7 @@ class Neuron:
         self.__W -= (alpha)*(dcost_dw1.T)
         self.__b -= (alpha)*(dcost_db1)
 
-    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, setp=100):
+    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
         """
         Trains the neuron using gradient descent.
 
@@ -162,8 +162,8 @@ class Neuron:
             self.gradient_descent(X, Y, A, alpha)
 
             # Print verbose information every 'step' iterations
-            if verbose and i % step == 0:
-                print(f"Cost after {i} iterations: {cost}")
+            if verbose and iteration % step == 0:
+                print(f"Cost after {iteration} iterations: {cost}")
 
         # Plot training cost if graph is True
         if graph:
