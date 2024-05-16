@@ -74,7 +74,7 @@ class NeuralNetwork:
         sigmoid2 = 1 / (1 + np.exp(-Z2))
         self.__A2 = sigmoid2
 
-        return (self.__A1, self.__A2)
+        return self.__A1, self.__A2
 
     def cost(self, Y, A):
         """
@@ -87,6 +87,7 @@ class NeuralNetwork:
         Returns:
         float: Cross-entropy loss.
         """
+        
         log_loss_arr = -(Y)*np.log(A) - (1-Y)*np.log(1.0000001-A)
         sum = np.sum(log_loss_arr)
         length = log_loss_arr.size
@@ -104,9 +105,9 @@ class NeuralNetwork:
         Returns:
         str: A formatted string containing labelized predictions and cost.
         """
-        class_prediction = self.forward_prop(X)
+        s, class_prediction = self.forward_prop(X)
         cost = self.cost(Y, class_prediction)
         # Labelize the predictions:
         # if prediction < 0.5, set to 0; else, set to 1
         labelized = np.where(class_prediction < 0.5, 0, 1)
-        return (labelized, cost)
+        return labelized, cost
