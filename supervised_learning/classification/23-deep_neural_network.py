@@ -5,6 +5,7 @@ Deep Neural Network Class
 
 
 import numpy as np
+import matplotlib as plt
 
 
 class DeepNeuralNetwork:
@@ -112,7 +113,8 @@ class DeepNeuralNetwork:
             self.__weights['W' + str(i)] -= (alpha * dw)
             self.__weights['b' + str(i)] -= (alpha * db)
 
-    def train(self, X, Y, iterations=5000, alpha=0.05):
+    def train(self, X, Y, iterations=5000,
+              alpha=0.05, verbose=True, graph=True, step=100):
         """ Train the deep neural network
         """
 
@@ -125,7 +127,19 @@ class DeepNeuralNetwork:
         if alpha < 0:
             raise ValueError('alpha must be positive')
 
+        costs = []
         for i in range(iterations):
             self.forward_prop(X)
             self.gradient_descent(Y, self.cache, alpha)
+            if verbose and i % step == 0:
+
+                cost = self.cost(Y, self.cache["A"+str(self.L)])
+                costs.append(cost)
+                print('Cost after {} iterations: {}'.format(i, cost))
+        if graph:
+            plt.plot(np.arange(0, iterations, step), costs)
+            plt.xlabel('iteration')
+            plt.ylabel('cost')
+            plt.title('Training Cost')
+            plt.show()
         return self.evaluate(X, Y)
