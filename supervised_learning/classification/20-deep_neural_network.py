@@ -84,9 +84,7 @@ class DeepNeuralNetwork:
         """
         Evaluate the model's predictions and cost on given input data.
         """
-        s, class_prediction = self.forward_prop(X)
-        cost = self.cost(Y, class_prediction)
-        # Labelize the predictions:
-        # if prediction < 0.5, set to 0; else, set to 1
-        labelized = np.where(class_prediction < 0.5, 0, 1)
-        return labelized, cost
+        prediction, _ = self.forward_prop(X)
+        prediction = (prediction >= 0.5).astype(int)
+        cost = self.cost(Y, prediction)
+        return prediction, cost
