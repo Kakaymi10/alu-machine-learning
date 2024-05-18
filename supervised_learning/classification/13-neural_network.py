@@ -110,3 +110,32 @@ class NeuralNetwork:
         # if prediction < 0.5, set to 0; else, set to 1
         labelized = np.where(class_prediction < 0.5, 0, 1)
         return labelized, cost
+
+    def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
+        """
+        Perform one pass of gradient descent.
+        
+        X: input data
+        Y: true labels
+        A1: output of the hidden layer
+        A2: predicted output
+        alpha: learning rate
+        """
+        m = X.shape[1]
+        
+        # Output layer gradients
+        dZ2 = A2 - Y
+        dW2 = np.matmul(dZ2, A1) / m
+        db2 = np.sum(dZ2, axis=1, keepdims=True) / m
+        
+        # Hidden layer gradients
+        dA1 = np.dot(self.__W2.T, dZ2)
+        dZ1 = dA1 * A1 * (1 - A1)
+        dW1 = np.matmul(dZ1, X.T) / m
+        db1 = np.sum(dZ1, axis=1, keepdims=True) / m
+        
+        # Update weights and biases
+        self.__W2 -= alpha * dW2
+        self.__b2 -= alpha * db2
+        self.__W1 -= alpha * dW1
+        self.__b1 -= alpha * db1

@@ -68,7 +68,7 @@ class Neuron:
         Returns:
         numpy.ndarray - The activated output of the neuron.
         """
-        Z = np.dot(self.W, X) + self.b
+        Z = np.matmul(self.W, X) + self.b
         sigmoid = 1 / (1 + np.exp(-Z))
         self.__A = sigmoid
         return self.__A
