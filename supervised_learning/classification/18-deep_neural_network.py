@@ -52,7 +52,7 @@ class DeepNeuralNetwork:
     @property
     def weights(self):
         return self.__weights
-    
+
     def forward_prop(self, X):
         '''
         forward propagate deep neural network
