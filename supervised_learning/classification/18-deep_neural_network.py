@@ -61,9 +61,11 @@ class DeepNeuralNetwork:
 
         for layer in range(1, self.__L + 1):
             inpLayer = "A" + str(layer - 1)
-            inpWeight = "W" + str(layer)
+            inpW = "W" + str(layer)
             inpBias = "b" + str(layer)
-            z = np.matmul(self.__weights[inpWeight], self.__cache[inpLayer]) + self.__weights[inpBias]
+            wx = np.matmul(self.__weights[inpW], self.__cache[inpLayer])
+            b = self.__weights[inpBias]
+            z = wx + b
             sigmoid = 1 / (1 + np.exp(-z))
             outputLayer = 'A' + str(layer)
             self.__cache[outputLayer] = sigmoid
