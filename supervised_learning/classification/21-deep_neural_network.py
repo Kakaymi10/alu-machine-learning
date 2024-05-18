@@ -95,15 +95,19 @@ class DeepNeuralNetwork:
         one pass of backpropagation
         '''
         m = Y.shape[1]
-        L = self.__L
-        weights = self.__weights
-        A_prev = cache["A" + str(L-1)]
-        dz = cache["A" + str(L)] - Y
         
-        for layer in range(L, 0, -1):
-            A_prev = cache["A" + str(layer - 1)]
-            dz = cache["A" + str(layer)] - Y if layer == L else np.dot(weights["W" + str(layer + 1)].T, dz) * A_prev * (1 - A_prev)
-            dw = np.dot(dz, A_prev.T) / m
-            db = np.sum(dz, axis=1, keepdims=True) / m
-            weights["W" + str(layer)] -= alpha * dw
-            weights["b" + str(layer)] -= alpha * db
+        for i in range(self.L, 0, -1):
+
+            A_prev = cache["A" + str(i - 1)]
+            A = cache["A" + str(i)]
+            W = self.__weights["W" + str(i)]
+
+            if i == self.__L:
+                dz = A - Y
+            else:
+                dz = da * (A * (1 - A))
+            db = dz.mean(axis=1, keepdims=True)
+            dw = np.matmul(dz, A_prev.T) / m
+            da = np.matmul(W.T, dz)
+            self.__weights['W' + str(i)] -= (alpha * dw)
+            self.__weights['b' + str(i)] -= (alpha * db)
