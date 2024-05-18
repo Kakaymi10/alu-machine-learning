@@ -125,11 +125,11 @@ class NeuralNetwork:
         
         # Output layer gradients
         dZ2 = A2 - Y
-        dW2 = np.matmul(dZ2, A1) / m
+        dW2 = np.matmul(dZ2, A1.T) / m
         db2 = np.sum(dZ2, axis=1, keepdims=True) / m
         
         # Hidden layer gradients
-        dA1 = np.dot(self.__W2.T, dZ2)
+        dA1 = np.matmul(self.__W2.T, dZ2)
         dZ1 = dA1 * A1 * (1 - A1)
         dW1 = np.matmul(dZ1, X.T) / m
         db1 = np.sum(dZ1, axis=1, keepdims=True) / m
