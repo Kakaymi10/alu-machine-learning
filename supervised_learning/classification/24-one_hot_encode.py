@@ -7,8 +7,6 @@ Deep Neural Network Class
 import numpy as np
 
 
-import numpy as np
-
 def one_hot_encode(Y, classes):
     """
     Converts a numeric label vector into a one-hot matrix.
@@ -16,7 +14,7 @@ def one_hot_encode(Y, classes):
     # Check if Y is a numpy ndarray and has the correct shape
     if not isinstance(Y, np.ndarray) or Y.ndim != 1:
         return None
-    
+
     try:
         # Number of examples
         m = Y.shape[0]
