@@ -85,6 +85,7 @@ class DeepNeuralNetwork:
         Evaluate the model's predictions and cost on given input data.
         """
         prediction, _ = self.forward_prop(X)
-        prediction = (prediction >= 0.5).astype(int)
-        cost = self.cost(Y, prediction)
+        output = self.cache.get("A" + str(self.L))
+        cost = self.cost(Y, output)
+        prediction = np.where(output >= 0.5, 1, 0)
         return prediction, cost
