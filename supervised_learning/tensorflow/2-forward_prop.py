@@ -4,7 +4,6 @@ Neural Class
 """
 
 
-import numpy as np
 import tensorflow as tf
 create_layer = __import__('1-create_layer').create_layer
 
@@ -21,4 +20,3 @@ def forward_prop(x, layer_sizes=[], activations=[]):
         outout = create_layer(output, layer_sizes[i], activations[i])
 
     return output
-
