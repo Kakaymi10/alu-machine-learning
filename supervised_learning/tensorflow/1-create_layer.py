@@ -4,7 +4,6 @@ Neural Class
 """
 
 
-import numpy as np
 import tensorflow as tf
 
 
