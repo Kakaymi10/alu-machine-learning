@@ -16,4 +16,3 @@ def create_placeholders(nx, classes):
     y = tf.placeholder(tf.float32, shape=(None, classes), name='y')
 
     return x, y
-
