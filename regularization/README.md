@@ -2,15 +2,15 @@
 
 ## We...
 
-We wondered why our models acted like toddlers on a sugar high. 
+## We wondered why our models acted like toddlers on a sugar high. 
 
-We realized they were overfitting faster than we overfit our jeans after Thanksgiving dinner.
+## We realized they were overfitting faster than we overfit our jeans after Thanksgiving dinner.
 
-We decided it was time to bring in the discipline—no more overindulgence in fitting the training data!
+## We decided it was time to bring in the discipline—no more overindulgence in fitting the training data!
 
-We laughed, we cried, and then we turned to regularization.
+## We laughed, we cried, and then we turned to regularization.
 
-## What the Heck is Regularization?
+# What the Heck is Regularization?
 
 Regularization is like sending your model to a yoga retreat—it's all about balance. It prevents the model from getting too attached to the training data, so it performs better on new, unseen data.
 
