@@ -11,16 +11,10 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     """
     Creates a tensorflow layer that includes L2 regularization
     """
-    # Define the L2 regularizer
-    l2_regularizer = tf.contrib.layers.l2_regularizer(lambtha)
-    
-    # Create a Dense layer with L2 regularization
-    layer = tf.layers.Dense(
-        units=n,
-        activation=activation,
-        kernel_initializer=tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG"),
-        kernel_regularizer=l2_regularizer
-    )
-    
-    # Apply the layer to the input
+    init = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
+    reg = tf.contrib.layers.l2_regularizer(lambtha)
+    layer = tf.layers.Dense(units=n, activation=activation,
+                            kernel_initializer=init,
+                            kernel_regularizer=reg)
+    return layer(prev) layer to the input
     return layer(prev)
