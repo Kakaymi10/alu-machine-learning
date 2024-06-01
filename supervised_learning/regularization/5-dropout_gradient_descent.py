@@ -7,7 +7,8 @@ import numpy as np
 
 def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
     """
-    Update the weights of a neural network using gradient descent with dropout regularization.
+    Update the weights of a neural network using gradient
+    descent with dropout regularization.
     """
     m = Y.shape[1]
     dz = cache['A' + str(L)] - Y
