@@ -7,7 +7,7 @@ optimization
 import numpy as np
 
 
-def shuffle_data(X,Y):
+def shuffle_data(X, Y):
     '''
     returns shuffled matrices
     '''
