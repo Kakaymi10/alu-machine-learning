@@ -13,20 +13,14 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     descent with L2 regularization
     """
     m = Y.shape[1]
-    A = cache[f'A{L}']
-    dA_prev = A - Y
-
+    dz = cache['A' + str(L)] - Y
     for i in range(L, 0, -1):
-        A_prev = cache[f'A{i-1}']
-        W = weights[f'W{i}']
-        b = weights[f'b{i}']
-
-        dZ = dA_prev
-        dW = (1 / m) * np.matmul(dZ, A_prev.T) + (lambtha / m) * W
-        db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
-        dA_prev = np.matmul(W.T, dZ) * (1 - np.square(A_prev))
-
-        weights[f'W{i}'] -= alpha * dW
-        weights[f'b{i}'] -= alpha * db
+        A = cache['A' + str(i - 1)]
+        W = weights['W' + str(i)]
+        dw = (1 / m) * np.matmul(dz, A.T) + (lambtha / m) * W
+        db = (1 / m) * np.sum(dz, axis=1, keepdims=True)
+        dz = np.matmul(W.T, dz) * (1 - np.square(A))
+        weights['W' + str(i)] -= alpha * dw
+        weights['b' + str(i)] -= alpha * db
 
     return weights
