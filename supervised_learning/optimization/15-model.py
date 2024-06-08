@@ -15,16 +15,19 @@ def shuffle_data(X, Y):
     Y_shuffled = Y[shuffle]
     return X_shuffled, Y_shuffled
 
+
 def calculate_loss(y, y_pred):
     """This method calculates the loss of a prediction."""
     loss = tf.losses.softmax_cross_entropy(y, y_pred)
     return loss
+
 
 def calculate_accuracy(y, y_pred):
     """This method calculates the accuracy of a prediction in a DNN."""
     correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_pred, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
     return accuracy
+
 
 def create_layer(prev, n, activation):
     """This method creates a TensorFlow layer."""
@@ -36,6 +39,7 @@ def create_layer(prev, n, activation):
         kernel_initializer=initializer, name="layer"
     )
     return layer(prev)
+
 
 def create_batch_norm_layer(prev, n, activation):
     """This function normalizes a batch in a DNN with TensorFlow."""
@@ -59,6 +63,7 @@ def create_batch_norm_layer(prev, n, activation):
         return normalization
     return activation(normalization)
 
+
 def forward_prop(x, layer_sizes=[], activations=[]):
     """This method performs forward propagation using TensorFlow."""
     layer = create_batch_norm_layer(x, layer_sizes[0], activations[0])
@@ -71,6 +76,7 @@ def forward_prop(x, layer_sizes=[], activations=[]):
             layer = create_layer(layer, layer_sizes[i], activations[i])
     return layer
 
+
 def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
     """This function trains a DNN with TensorFlow RMSProp optimization."""
     optimizer = tf.train.AdamOptimizer(
@@ -78,12 +84,14 @@ def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
     ).minimize(loss)
     return optimizer
 
+
 def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
     """This function performs learning rate decay in TensorFlow using inverse time decay."""
     LRD = tf.train.inverse_time_decay(
         alpha, global_step, decay_step, decay_rate, staircase=True
     )
     return LRD
+
 
 def model(
     Data_train,
