@@ -86,7 +86,8 @@ def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
 
 
 def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
-    """This function performs learning rate decay in TensorFlow using inverse time decay."""
+    """This function performs learning rate
+    decay in TensorFlow using inverse time decay."""
     LRD = tf.train.inverse_time_decay(
         alpha, global_step, decay_step, decay_rate, staircase=True
     )
