@@ -4,4 +4,4 @@ import pandas as pd
 
 def from_file(filename, delimiter):
     df = pd.read_csv(filename, delimiter=delimiter)
-    return df
+    return pd.DataFram(df)
