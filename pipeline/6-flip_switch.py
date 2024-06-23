@@ -10,4 +10,4 @@ df_transposed = df.transpose()
 # Sort the transposed DataFrame in reverse chronological order
 df_transposed_sorted = df_transposed.sort_index(axis=1, ascending=False)
 
-print(df.tail(8))
+print(df_transposed_sorted.tail(8))
