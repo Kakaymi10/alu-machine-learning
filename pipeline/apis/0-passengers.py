@@ -15,7 +15,7 @@ def availableShips(passengerCount):
     url = 'https://swapi-api.alx-tools.com/api/starships/?page=1'
     response = requests.get(url).json()
     ships = []
-    while response['next'] != None:
+    while response['next'] is not None:
         for ship in response['results']:
             if ship['passengers'] != 'n/a' and ship['passengers'] != 'unknown':
                 ship['passengers'] = ship['passengers'].replace(',', '')
