@@ -8,6 +8,9 @@ import requests
 
 
 def sentientPlanets():
+    '''
+    through links
+    '''
     url = 'https://swapi-api.alx-tools.com/api/species/?page=1'
     planets = []
 
