@@ -13,7 +13,6 @@ def availableShips(passengerCount):
     that can hold a given number of passengers
     '''
     url = 'https://swapi-api.alx-tools.com/api/starships/?page=1'
-    
     response = requests.get(url).json()
     ships = []
     while response['next'] != None:
