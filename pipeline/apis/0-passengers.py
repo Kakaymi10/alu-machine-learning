@@ -25,5 +25,5 @@ def availableShips(passengerCount):
         url = response['next']
         response = requests.get(url).json()
     if len(ships) == 0:
-        return 'No ships available'
+        return []
     return ships
