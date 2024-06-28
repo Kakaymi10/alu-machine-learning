@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
+'''scrap from githib'''
+
+
 import sys
 import requests
 import time
 
+
 def get_user_location(api_url):
+    '''return user's location'''
     try:
         response = requests.get(api_url)
         if response.status_code == 200:
