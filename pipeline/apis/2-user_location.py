@@ -25,10 +25,10 @@ def get_user_location(api_url):
     except requests.exceptions.RequestException as e:
         print('Request failed: {}'.format(e))
 
+
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print('Usage: ./2-user_location.py <API_URL>')
     else:
         api_url = sys.argv[1]
         get_user_location(api_url)
-
