@@ -22,12 +22,12 @@ def get_upcoming_launch():
             rocket_id = upcoming_launch['rocket']
             
             # Fetch rocket details
-            rocket_response = requests.get(f'https://api.spacexdata.com/v4/rockets/{rocket_id}')
+            rocket_response = requests.get('https://api.spacexdata.com/v4/rockets/'+str(rocket_id))
             rocket_name = rocket_response.json().get('name', 'Unknown rocket')
             
             # Fetch launchpad details
             launchpad_id = upcoming_launch['launchpad']
-            launchpad_response = requests.get(f'https://api.spacexdata.com/v4/launchpads/{launchpad_id}')
+            launchpad_response = requests.get('https://api.spacexdata.com/v4/launchpads/'+str(launchpad_id))
             launchpad_data = launchpad_response.json()
             launchpad_name = launchpad_data.get('name', 'Unknown launchpad')
             launchpad_locality = launchpad_data.get('locality', 'Unknown locality')
