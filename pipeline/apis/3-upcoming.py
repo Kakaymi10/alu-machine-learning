@@ -32,11 +32,11 @@ def get_upcoming_launch():
             launchpad_name = launchpad_data.get('name', 'Unknown launchpad')
             launchpad_locality = launchpad_data.get('locality', 'Unknown locality')
             
-            print(f'{launch_name} ({launch_date_local}) {rocket_name} - {launchpad_name} ({launchpad_locality})')
+            print(launch_name + ' ('+launch_date_local+') ' + rocket_name + ' - ' + launchpad_name + ' ('+launchpad_locality+')')
         else:
-            print(f'Error: {response.status_code}')
+            print('Error: '+ response.status_code)
     except requests.exceptions.RequestException as e:
-        print(f'Request failed: {e}')
+        print('Request failed: ' +e)
 
 if __name__ == '__main__':
     get_upcoming_launch()
