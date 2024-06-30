@@ -32,9 +32,9 @@ def get_upcoming_launch():
             launchpad_response = requests.get(sub_pad + str(launchpad_id))
             launchpad_data = launchpad_response.json()
             launchpad_name = launchpad_data.get('name', 'Unknown launchpad')
-            launchpad_locality = launchpad_data.get('locality', 'Unknown locality')
-            first = launch_name + ' (' + launch_date_local + ') ' + rocket_name + ' - '
-            print(first + launchpad_name + ' (' + launchpad_locality + ')')
+            launch_local = launchpad_data.get('locality', 'Unknown locality')
+            f = launch_name + ' (' + launch_date_local + ') ' + rocket_name
+            print(first + ' - ' + launchpad_name + ' (' + launch_local + ')')
         else:
             print('Error: ' + str(response.status_code))
     except requests.exceptions.RequestException as e:
