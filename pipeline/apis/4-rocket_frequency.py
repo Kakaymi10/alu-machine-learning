@@ -26,7 +26,7 @@ def get_rocket_name():
     # Print rocket names with the number of launches in decreasing order
     sorted_rockets = sorted(rockets.items(), key=lambda x: x[1], reverse=True)
     for rocket, count in sorted_rockets:
-        print('{} : {}'.format(names[rocket], count))
+        print('{}: {}'.format(names[rocket], count))
 
 if __name__ == '__main__':
     get_rocket_name()
