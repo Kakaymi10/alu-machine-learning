@@ -3,10 +3,13 @@
 Get rocket names from launch details
 '''
 
+
 import requests
 from collections import defaultdict
 
+
 def get_rocket_name():
+    '''return rocket with its number of launches'''
     url = 'https://api.spacexdata.com/v4/launches'
     response = requests.get(url)
     rockets = defaultdict(int)
