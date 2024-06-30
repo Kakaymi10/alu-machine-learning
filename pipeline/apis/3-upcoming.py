@@ -17,8 +17,7 @@ def get_upcoming_launch():
             upcoming_launch = sorted(launches, key=lambda x: x['date_unix'])[0]
             
             launch_name = upcoming_launch['name']
-            launch_date_utc = datetime.fromtimestamp(upcoming_launch['date_unix'], timezone.utc)
-            launch_date_local = launch_date_utc.astimezone().strftime('%Y-%m-%d %H:%M:%S')
+            launch_date_local = upcoming_launch['date_local'],
             rocket_id = upcoming_launch['rocket']
             
             # Fetch rocket details
