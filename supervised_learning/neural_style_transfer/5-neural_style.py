@@ -230,26 +230,32 @@ class NST:
         return tf.reduce_mean(
             tf.square(gram_style_output - gram_target))
 
-    def style_cost(self, style_outputs):
+    def layer_style_cost(self, style_output, gram_target):
         '''
-        Calculates the total style cost for the generated image
+        Calculates the style cost for a single layer
 
         Args:
-            style_outputs - a list of tf.Tensor style outputs for the generated image
+        - style_output: (1, h, w, c) tf.Tensor containing
+        the style output of the generated image
+        - gram_target: (1, c, c) tf.Tensor of the target
+        style output for that layer
 
         Returns:
-            The total style cost (a scalar)
+        Layer's style cost
         '''
-        # Ensure that style_outputs is a list of the correct length
-        if not isinstance(style_outputs, list) or len(style_outputs) != len(self.style_layers):
-            raise TypeError('style_outputs must be a list with a length of {}'.format(len(self.style_layers)))
+        if not (isinstance(style_output, tf.Tensor) or
+            isinstance(style_output, tf.Variable)) or len(style_output.shape) != 4:
+            raise TypeError('style_output must be a tensor of rank 4')
 
-        # Calculate the total style cost
-        total_style_cost = 0
-        weight = 1.0 / len(self.style_layers)  # Each layer is weighted evenly
+        _, _, _, c = style_output.shape
 
-        for style_output, gram_target in zip(style_outputs, self.gram_style_features):
-            layer_cost = self.layer_style_cost(style_output, gram_target)
-            total_style_cost += layer_cost * weight
+        if not (isinstance(gram_target, tf.Tensor) or isinstance(gram_target, tf.Variable)) or gram_target.shape != (1, c, c):
+            raise TypeError('gram_target must be a tensor of shape [1, {}, {}]'.format(c, c))
 
-        return total_style_cost
+        gram_style_output = self.gram_matrix(style_output)
+
+        # Ensure that the data type is consistent (float32)
+        gram_style_output = tf.cast(gram_style_output, tf.float32)
+        gram_target = tf.cast(gram_target, tf.float32)
+
+        return tf.reduce_mean(tf.square(gram_style_output - gram_target))
