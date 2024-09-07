@@ -76,6 +76,8 @@ class NST:
         self.alpha = alpha
         self.beta = beta
 
+        self.load_model()
+
     @staticmethod
     def scale_image(image):
         '''
@@ -112,3 +114,61 @@ class NST:
         rescaled = tf.clip_by_value(rescaled, 0, 1)
 
         return rescaled
+
+    # Public Instance Method
+    def load_model(self):
+        '''
+        Creates the model used to calculate the loss
+        '''
+
+        # load vgg model
+        vgg_model = tf.keras.applications.VGG19(
+            include_top=False, weights='imagenet')
+
+        # MaxPooling2D - AveragePooling 2D
+        vgg_model.save('base')
+        custom_objects = {'MaxPooling2D': tf.keras.layers.AveragePooling2D}
+        vgg = tf.keras.models.load_model(
+            'base', custom_objects=custom_objects)
+
+        style_outputs = [
+            vgg.get_layer(name).output for name in self.style_layers]
+        content_outputs = [
+            vgg.get_layer(self.content_layer).output]
+        model_outputs = style_outputs + content_outputs
+
+        model = tf.keras.models.Model(
+            vgg.input, model_outputs, name="model")
+
+        # Freeze weights
+        model.trainable = False
+
+        self.model = model
+
+    @staticmethod
+    def gram_matrix(input_layer):
+        '''
+        Calculates gram matrices
+
+        Args:
+            input_layer: an instance of tf.tensor or
+            tf.Variable of shape (1, h, w, c) containing
+            the output whose gram matrix should be calculated
+
+        Returns:
+            A tf.Tensor of shape (1, c, c) containing
+            the gram matrix of input layer
+        '''
+
+        # Run checks
+        if not (isinstance(input_layer, tf.Tensor) or
+                isinstance(input_layer, tf.Variable)) or len(
+                    input_layer.shape) != 4:
+            raise TypeError('input_layer must be a tensor of rank 4')
+
+        channels = int(input_layer.shape[-1])
+        a = tf.reshape(input_layer, [1, -1, channels])
+        n = tf.shape(a)[1]
+
+        gram = tf.matmul(a, a, transpose_a=True)
+        return gram / tf.cast(n, tf.float32)
