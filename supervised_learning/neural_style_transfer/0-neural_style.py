@@ -49,6 +49,7 @@ class NST:
         self.beta = beta
 
         tf.compat.v1.enable_eager_execution()
+        print("Eager execution:", tf.executing_eagerly())
 
     @staticmethod
     def scale_image(image):
@@ -77,4 +78,11 @@ class NST:
 
         image_resized = tf.image.resize(image, [new_h, new_w], method=tf.image.ResizeMethod.BICUBIC)
         image_scaled = image_resized / 255.0
-        return tf.expand_dims(image_scaled, axis=0)
+        image_tensor = tf.expand_dims(image_scaled, axis=0)
+        
+        # Print shape and min/max for debugging
+        print("Scaled image shape:", image_tensor.shape)
+        print("Min pixel value:", tf.reduce_min(image_tensor))
+        print("Max pixel value:", tf.reduce_max(image_tensor))
+
+        return image_tensor
