@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 '''Create a class NST that performs tasks for neural style transfer'''
 
+
 import numpy as np
 import tensorflow as tf
 
@@ -70,8 +71,8 @@ class NST:
         tf.enable_eager_execution()
 
         # Instance attributes
-        self.style_image = tf.cast(self.scale_image(style_image), tf.float64)
-        self.content_image = tf.cast(self.scale_image(content_image), tf.float64)
+        self.style_image = self.scale_image(style_image)
+        self.content_image = self.scale_image(content_image)
         self.alpha = alpha
         self.beta = beta
 
@@ -171,7 +172,7 @@ class NST:
         n = tf.shape(a)[1]
 
         gram = tf.matmul(a, a, transpose_a=True)
-        return gram / tf.cast(n, tf.float64)  # Updated to tf.float64
+        return gram / tf.cast(n, tf.float32)
 
     def generate_features(self):
         '''
@@ -231,28 +232,24 @@ class NST:
 
     def style_cost(self, style_outputs):
         '''
-        Calculates the style cost for the generated image
+        Calculates the total style cost for the generated image
 
         Args:
-            style_outputs: list of tf.Tensor style outputs
+            style_outputs - a list of tf.Tensor style outputs for the generated image
 
-        Return:
-            The style cost
+        Returns:
+            The total style cost (a scalar)
         '''
-        length = len(self.style_layers)
+        # Ensure that style_outputs is a list of the correct length
+        if not isinstance(style_outputs, list) or len(style_outputs) != len(self.style_layers):
+            raise TypeError('style_outputs must be a list with a length of {}'.format(len(self.style_layers)))
 
-        if not isinstance(style_outputs, list) or len(
-                style_outputs) != length:
-            raise TypeError(
-                'style_outputs must be a list with a length of {}'.format(
-                    length))
+        # Calculate the total style cost
+        total_style_cost = 0
+        weight = 1.0 / len(self.style_layers)  # Each layer is weighted evenly
 
-        style_cost = 0.0
-        weight_per_style = 1.0 / length
+        for style_output, gram_target in zip(style_outputs, self.gram_style_features):
+            layer_cost = self.layer_style_cost(style_output, gram_target)
+            total_style_cost += layer_cost * weight
 
-        for i in range(length):
-            style_cost += weight_per_style * self.layer_style_cost(
-                style_outputs[i], self.gram_style_features[i]
-            )
-
-        return style_cost
+        return total_style_cost
