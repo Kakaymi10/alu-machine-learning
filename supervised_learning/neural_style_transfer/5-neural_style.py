@@ -71,8 +71,8 @@ class NST:
         tf.enable_eager_execution()
 
         # Instance attributes
-        self.style_image = self.scale_image(style_image)
-        self.content_image = self.scale_image(content_image)
+        self.style_image = tf.cast(self.scale_image(style_image), tf.float64)
+        self.content_image = tf.cast(self.scale_image(content_image), tf.float64)
         self.alpha = alpha
         self.beta = beta
 
