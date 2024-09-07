@@ -235,23 +235,24 @@ class NST:
         Calculates the total style cost for the generated image
 
         Args:
-            style_outputs - a list of tf.Tensor style outputs for the generated image
+            style_outputs - a list of tf.Tensor style outputs fo
+            r the generated image
 
         Returns:
             The total style cost (a scalar)
         '''
         # Ensure that style_outputs is a list of the correct length
-        if not isinstance(style_outputs, list) or len(style_outputs) != len(self.style_layers):
-            raise TypeError('style_outputs must be a list with a length of {}'.format(len(self.style_layers)))
+        s_o = len(style_outputs)
+        s_l = len(self.style_layers)
+        if not isinstance(style_outputs, list) or s_o != s_l:
+            raise TypeError('style_outputs must be a list with a length of {}'.format(s_l))
 
         # Calculate the total style cost
         total_style_cost = 0
-        weight = 1.0 / len(self.style_layers)  # Each layer is weighted evenly
+        weight = 1.0 / s_l  # Each layer is weighted evenly
 
         for style_output, gram_target in zip(style_outputs, self.gram_style_features):
             layer_cost = self.layer_style_cost(style_output, gram_target)
             total_style_cost += layer_cost * weight
 
         return total_style_cost
-
-    
