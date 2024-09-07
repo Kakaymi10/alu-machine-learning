@@ -172,7 +172,7 @@ class NST:
         n = tf.shape(a)[1]
 
         gram = tf.matmul(a, a, transpose_a=True)
-        return gram / tf.cast(n, tf.float32)
+        return gram / tf.cast(n, tf.float64)
 
     def generate_features(self):
         '''
