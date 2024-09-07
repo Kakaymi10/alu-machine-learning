@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 '''Create a class NST that performs tasks for neural style transfer'''
 
-
 import numpy as np
 import tensorflow as tf
 
@@ -172,7 +171,7 @@ class NST:
         n = tf.shape(a)[1]
 
         gram = tf.matmul(a, a, transpose_a=True)
-        return gram / tf.cast(n, tf.float64)
+        return gram / tf.cast(n, tf.float64)  # Updated to tf.float64
 
     def generate_features(self):
         '''
