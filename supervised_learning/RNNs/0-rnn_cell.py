@@ -13,7 +13,7 @@ class RNNCell:
         ''' Class constructor '''
         self.Wy = np.random.normal(size=(h, o))
         self.by = np.zeros((1, o))
-        self.Wh = np.random.normal(size=(i + h, h))
+        self.Wh = np.random.normal(size=(h + i, h))
         self.bh = np.zeros((1, h))
 
     def forward(self, h_prev, x_t):
