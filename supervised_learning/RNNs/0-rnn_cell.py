@@ -3,14 +3,12 @@
 RNN Cell
 '''
 
-
 import numpy as np
-
-
 
 class RNNCell:
     def __init__(self, i, h, o):
         ''' Class constructor '''
+        np.random.seed(0)  # Setting the seed for reproducibility
         self.Wy = np.random.randn(h, o)
         self.by = np.zeros((1, o))
         self.Wh = np.random.randn(i + h, h)
