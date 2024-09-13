@@ -8,7 +8,9 @@ RNN Cell
 
 import numpy as np
 
+
 class RNNCell:
+    ''' Class that represents a cell of a simple RNN '''
     def __init__(self, i, h, o):
         ''' Class constructor '''
         self.bh = np.zeros((1, h))
