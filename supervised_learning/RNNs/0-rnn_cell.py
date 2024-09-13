@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
+
+
 '''
 RNN Cell
 '''
+
 
 import numpy as np
 
