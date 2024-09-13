@@ -11,10 +11,10 @@ import numpy as np
 class RNNCell:
     def __init__(self, i, h, o):
         ''' Class constructor '''
-        self.Wy = np.random.normal(size=(h, o))
+        self.bh = np.zeros((1, h))
         self.by = np.zeros((1, o))
         self.Wh = np.random.normal(size=(h + i, h))
-        self.bh = np.zeros((1, h))
+        self.Wy = np.random.normal(size=(h, o))
 
     def forward(self, h_prev, x_t):
         ''' Method that performs forward propagation for one time step '''
