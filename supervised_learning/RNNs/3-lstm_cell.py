@@ -25,7 +25,7 @@ class LSTMCell:
         self.bc = np.zeros((1, h))
         self.bo = np.zeros((1, h))
         self.by = np.zeros((1, o))
-    
+
     def forward(self, h_prev, c_prev, x_t):
         ''' Method that performs forward propagation for one time step '''
         h_x = np.hstack((h_prev, x_t))
