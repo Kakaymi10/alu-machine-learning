@@ -11,7 +11,7 @@ class RNNCell:
         np.random.seed(0)  # Setting the seed for reproducibility
         self.Wy = np.random.randn(h, o)
         self.by = np.zeros((1, o))
-        self.Wh = np.random.randn(i + h, h)
+        self.Wh = np.random.randn(i, h)
         self.bh = np.zeros((1, h))
 
     def forward(self, h_prev, x_t):
