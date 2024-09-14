@@ -11,7 +11,7 @@ def bi_rnn(bi_cell, X, h_0, h_t):
     '''
     Function that performs forward propagation for a bidirectional RNN
     '''
-    t, m, i = X.shape  # t = number of time steps, m = batch size, i = input size
+    t, m, i = X.shape
     h = h_0.shape[1]  # The dimensionality of the hidden state
 
     # Initialize forward and backward hidden state arrays
@@ -31,7 +31,7 @@ def bi_rnn(bi_cell, X, h_0, h_t):
         Hb[step] = bi_cell.backward(Hb[step + 1], X[step])
 
     # Concatenate forward and backward hidden states along the last axis
-    H = np.concatenate((Hf, Hb), axis=-1)  # Concatenate on the hidden state axis
+    H = np.concatenate((Hf, Hb), axis=-1)
 
     # Compute the output using the concatenated hidden states
     Y = bi_cell.output(H)  # Ensure bi_cell.output handles 2h input
