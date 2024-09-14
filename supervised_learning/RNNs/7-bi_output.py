@@ -38,7 +38,11 @@ class BidirectionalCell:
         ''' Method that calculates the output of the cell '''
         t, m, h = H.shape
         Y = np.zeros((t, m, self.Wy.shape[1]))
+
         for i in range(t):
-            Y[i] = np.dot(np.hstack((H[i, :, :h], H[i, :, h:])), self.Wy) + self.by
-            Y[i] = np.exp(Y[i]) / np.sum(np.exp(Y[i]), axis=1, keepdims=True)
+            h_stack = np.hstack((H[i, :, :h], H[i, :, h:]))
+            Y[i] = np.dot(h_stack, self.Wy) + self.by
+            exp_Y = np.exp(Y[i])
+            Y[i] = exp_Y / np.sum(exp_Y, axis=1, keepdims=True)
+
         return Y
