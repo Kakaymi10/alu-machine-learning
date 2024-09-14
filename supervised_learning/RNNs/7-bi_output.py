@@ -28,11 +28,12 @@ class BidirectionalCell:
         h_next = np.tanh(np.dot(h_x, self.Whf) + self.bhf)
         return h_next
 
-    def backward(self, h_next, x_t):
+    def backward(self, h_prev, x_t):
         ''' Method that performs backward propagation for one time step '''
-        h_x = np.hstack((h_next, x_t))
-        h_prev = np.tanh(np.dot(h_x, self.Whb) + self.bhb)
-        return h_prev
+        h_x = np.hstack((h_prev, x_t))  # Use h_prev and x_t, not h_next
+        h_next = np.tanh(np.dot(h_x, self.Whb) + self.bhb)
+        return h_next
+
 
     def output(self, H):
         ''' Method that calculates the output of the cell '''
@@ -40,8 +41,8 @@ class BidirectionalCell:
         Y = np.zeros((t, m, self.Wy.shape[1]))
 
         for i in range(t):
-            h_stack = np.hstack((H[i, :, :h], H[i, :, h:]))
-            Y[i] = np.dot(h_stack, self.Wy) + self.by
+            # No need to re-stack H, use it directly
+            Y[i] = np.dot(H[i], self.Wy) + self.by
             exp_Y = np.exp(Y[i])
             Y[i] = exp_Y / np.sum(exp_Y, axis=1, keepdims=True)
 
