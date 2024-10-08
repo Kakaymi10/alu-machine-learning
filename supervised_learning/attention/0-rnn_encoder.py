@@ -42,4 +42,3 @@ class RNNEncoder(tf.keras.layers.Layer):
         x = self.embedding(x)
         outputs, hidden = self.gru(x, initial_state=initial)
         return outputs, hidden
-
