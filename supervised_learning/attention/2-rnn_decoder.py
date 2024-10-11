@@ -8,9 +8,6 @@ import tensorflow as tf
 
 SelfAttention = __import__('1-self_attention').SelfAttention
 
-# Set a fixed seed for reproducibility
-tf.random.set_seed(42)
-
 class RNNDecoder(tf.keras.layers.Layer):
     def __init__(self, vocab, embedding, units, batch):
         super(RNNDecoder, self).__init__()
@@ -27,22 +24,13 @@ class RNNDecoder(tf.keras.layers.Layer):
         # s_prev shape: (batch, units)
         # hidden_states shape: (batch, input_seq_len, units)
         
-        # Embed the input
         x = self.embedding(x)  # (batch, 1, embedding)
-        
-        # Calculate attention
         context, _ = self.attention(s_prev, hidden_states)
-        
-        # Concatenate context vector with x
         x = tf.concat([tf.expand_dims(context, 1), x], axis=-1)
         
-        # Pass through GRU
         output, state = self.gru(x, initial_state=s_prev)
         
-        # Reshape output
         output = tf.reshape(output, (-1, output.shape[2]))
-        
-        # Pass through dense layer
         y = self.F(output)
         
         return y, state
