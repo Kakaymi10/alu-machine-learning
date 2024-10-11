@@ -18,14 +18,18 @@ class SelfAttention(tf.keras.layers.Layer):
         super(SelfAttention, self).__init__()
         self.units = units
         # Create the query, key, and value matrices
-        self.W = tf.keras.layers.Dense(units)
-        self.U = tf.keras.layers.Dense(units)
-        self.V = tf.keras.layers.Dense(1)  # Changed to 1 unit
+        self.W = tf.keras.layers.Dense(units, dtype='float32')
+        self.U = tf.keras.layers.Dense(units, dtype='float32')
+        self.V = tf.keras.layers.Dense(1, dtype='float32')  # Changed to 1 unit
 
     def call(self, s_prev, hidden_states):
         '''
         Method that performs the self-attention
         '''
+        # Ensure input tensors are float32
+        s_prev = tf.cast(s_prev, dtype=tf.float32)
+        hidden_states = tf.cast(hidden_states, dtype=tf.float32)
+
         # Expand s_prev to match hidden_states time steps
         s_prev_expanded = tf.expand_dims(s_prev, 1)
         
