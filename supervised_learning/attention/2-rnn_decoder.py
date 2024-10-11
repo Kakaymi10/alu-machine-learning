@@ -8,6 +8,9 @@ import tensorflow as tf
 
 SelfAttention = __import__('1-self_attention').SelfAttention
 
+# Set a fixed seed for reproducibility
+tf.random.set_seed(42)
+
 class RNNDecoder(tf.keras.layers.Layer):
     def __init__(self, vocab, embedding, units, batch):
         super(RNNDecoder, self).__init__()
