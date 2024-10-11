@@ -5,7 +5,6 @@ Module that contains the class SelfAttention
 
 
 import tensorflow as tf
-import numpy as np
 
 
 class SelfAttention(tf.keras.layers.Layer):
