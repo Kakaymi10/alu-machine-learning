@@ -39,13 +39,13 @@ class EncoderBlock(tf.keras.layers.Layer):
         """
         # 1. Multi-head attention with residual connection and layer norm
         attn_output, _ = self.mha(x, x, x, mask)  # Self-attention
-        attn_output = self.dropout1(attn_output, training=training)  # Apply dropout
-        out1 = self.layernorm1(x + attn_output)  # Residual connection + Layer normalization
+        attn_output = self.dropout1(attn_output, training=training)
+        out1 = self.layernorm1(x + attn_output)
 
         # 2. Feed-forward network with residual connection and layer norm
         hidden_output = self.dense_hidden(out1)  # Hidden dense layer
         ffn_output = self.dense_output(hidden_output)  # Output dense layer
-        ffn_output = self.dropout2(ffn_output, training=training)  # Apply dropout
-        out2 = self.layernorm2(out1 + ffn_output) 
+        ffn_output = self.dropout2(ffn_output, training=training)
+        out2 = self.layernorm2(out1 + ffn_output)
 
         return out2  # Return the final output
