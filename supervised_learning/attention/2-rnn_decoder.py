@@ -37,17 +37,22 @@ class RNNDecoder(tf.keras.layers.Layer):
         Performs the forward pass for the decoder.
 
         Args:
-            x (tf.Tensor): Tensor of shape (batch, 1) representing the previous
-                           word in the target sequence as an index.
-            s_prev (tf.Tensor): Tensor of shape (batch, units) representing the
-                                previous decoder hidden state.
-            hidden_states (tf.Tensor): Tensor of shape (batch, input_seq_len, units)
-                                       representing the encoder outputs.
+            x (tf.Tensor):
+            Tensor of shape (batch, 1) representing the previous
+            word in the target sequence as an index.
+            s_prev (tf.Tensor):
+            Tensor of shape (batch, units) representing the
+            previous decoder hidden state.
+            hidden_states (tf.Tensor):
+            Tensor of shape (batch, input_seq_len, units)
+            representing the encoder outputs.
 
         Returns:
-            y (tf.Tensor): Tensor of shape (batch, vocab) with output word as
-                           a one-hot vector in the target vocabulary.
-            s (tf.Tensor): Tensor of shape (batch, units) with the new hidden state.
+            y (tf.Tensor): 
+            Tensor of shape (batch, vocab) with output word as
+            a one-hot vector in the target vocabulary.
+            s (tf.Tensor):
+            Tensor of shape (batch, units) with the new hidden state.
         """
         # Embed the input word
         x = self.embedding(x)
