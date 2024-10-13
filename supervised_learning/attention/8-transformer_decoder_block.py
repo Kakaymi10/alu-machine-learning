@@ -34,7 +34,9 @@ class DecoderBlock(tf.keras.layers.Layer):
         self.dropout3 = tf.keras.layers.Dropout(drop_rate)
 
     def call(self, x, encoder_output, training, look_ahead_mask, padding_mask):
-        # 1st Multi-Head Attention (Self-attention) + Dropout + Layer Norm
+        '''
+        1st Multi-Head Attention (Self-attention) + Dropout + Layer Norm
+        '''
         attn1, _ = self.mha1(x, x, x, mask=look_ahead_mask)
         attn1 = self.dropout1(attn1, training=training)
         out1 = self.layernorm1(x + attn1)  # Residual connection
