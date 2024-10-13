@@ -8,8 +8,6 @@ SelfAttention = __import__('1-self_attention').SelfAttention
 
 class RNNDecoder(tf.keras.layers.Layer):
     """RNNDecoder class to decode sequences for machine translation."""
-
-
     def __init__(self, vocab, embedding, units, batch):
         """
         Initializes the RNNDecoder layer.
@@ -46,9 +44,8 @@ class RNNDecoder(tf.keras.layers.Layer):
             hidden_states (tf.Tensor):
             Tensor of shape (batch, input_seq_len, units)
             representing the encoder outputs.
-
         Returns:
-            y (tf.Tensor): 
+            y (tf.Tensor):
             Tensor of shape (batch, vocab) with output word as
             a one-hot vector in the target vocabulary.
             s (tf.Tensor):
