@@ -9,6 +9,9 @@ sdp_attention = __import__('5-sdp_attention').sdp_attention
 
 
 class MultiHeadAttention(tf.keras.layers.Layer):
+    '''
+    Multi headed att
+    '''
     def __init__(self, dm, h):
         """Class constructor for multi-head attention."""
         super(MultiHeadAttention, self).__init__()
