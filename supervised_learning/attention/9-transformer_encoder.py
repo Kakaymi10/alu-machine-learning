@@ -31,21 +31,24 @@ class Encoder(tf.keras.layers.Layer):
 
     def call(self, x, training, mask):
         '''
-        call
+        Get sequence length from the input tensor
         '''
         seq_len = tf.shape(x)[1]
 
-        # Apply embedding and scale it by the square root of the dimensionality
+        # Apply embedding and scale by sqrt(dm)
         x = self.embedding(x) * tf.math.sqrt(tf.cast(self.dm, tf.float32))
 
-        # Add the positional encoding (broadcast to match the input batch size)
-        x += self.positional_encoding[:seq_len]
+        # Add positional encoding (ensure proper broadcasting)
+        x += self.positional_encoding[tf.newaxis, :seq_len, :]
 
-        # Apply dropout to the input with positional encodings
+        # Apply dropout
         x = self.dropout(x, training=training)
 
-        # Pass through each encoder block sequentially
+        # Pass through each encoder block
         for block in self.blocks:
             x = block(x, training, mask)
+
+        # Verify shape
+        tf.print("Output shape:", tf.shape(x), summarize=-1)
 
         return x
