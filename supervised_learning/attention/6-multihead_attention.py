@@ -49,8 +49,8 @@ class MultiHeadAttention(tf.keras.layers.Layer):
 
         # Transpose and reshape the output back to (batch, seq_len_q, dm)
         scaled_attention = tf.transpose(scaled_attention, perm=[0, 2, 1, 3])
-        concat_attention = tf.reshape(scaled_attention, (batch_size, -1, self.dm))
+        concat_att = tf.reshape(scaled_attention, (batch_size, -1, self.dm))
         # Apply the final linear layer to get the attention output
-        output = self.linear(concat_attention)  # (batch, seq_len_q, dm)
+        output = self.linear(concat_att)  # (batch, seq_len_q, dm)
 
         return output, weights
