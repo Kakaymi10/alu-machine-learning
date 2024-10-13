@@ -13,7 +13,7 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         """Class constructor for multi-head attention."""
         super(MultiHeadAttention, self).__init__()
         assert dm % h == 0, "dm must be divisible by h"
-        
+
         self.dm = dm  # Dimensionality of the model
         self.h = h    # Number of heads
         self.depth = dm // h  # Depth of each attention head
@@ -25,7 +25,8 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         self.linear = tf.keras.layers.Dense(dm)
 
     def split_heads(self, x, batch_size):
-        """Split the last dimension into (h, depth) and transpose for multi-head attention."""
+        """Split the last dimension into (h, depth) and transpose
+        for multi-head attention."""
         x = tf.reshape(x, (batch_size, -1, self.h, self.depth))
         return tf.transpose(x, perm=[0, 2, 1, 3])
 
@@ -49,7 +50,6 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         # Transpose and reshape the output back to (batch, seq_len_q, dm)
         scaled_attention = tf.transpose(scaled_attention, perm=[0, 2, 1, 3])
         concat_attention = tf.reshape(scaled_attention, (batch_size, -1, self.dm))
-
         # Apply the final linear layer to get the attention output
         output = self.linear(concat_attention)  # (batch, seq_len_q, dm)
 
