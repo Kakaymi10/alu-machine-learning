@@ -30,6 +30,9 @@ def pca(X, var=0.95):
     # Step 5: Find the number of components to keep the desired variance
     num_components = np.argmax(cumulative_variance >= var) + 1
 
+    # Ensure at least 3 components are returned
+    num_components = max(num_components, 3)
+
     # Step 6: Select the top eigenvectors to form the weight matrix W
     W = eigenvectors[:, :num_components]  # Shape: (d, num_components)
 
