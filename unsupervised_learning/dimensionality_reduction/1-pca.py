@@ -23,6 +23,6 @@ def pca(X, ndim):
     W = Vt.T[:, :ndim]
 
     # Project X to the new space
-    T = X @ W
+    T = np.matmul(X, W)
 
-    return T
+    return (T)
