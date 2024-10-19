@@ -1,27 +1,23 @@
 #!/usr/bin/env python3
-
-"""
-This module contains a function that calculates
-maximization step in the EM algorithm for a GMM
-"""
+"""Calculating the maximization step in the EM algorithm for a GMM"""
 
 import numpy as np
 
 
 def maximization(X, g):
-    """
-    initializes variables for a Gaussian Mixture Model
+    """Function that calculates the maximization
+        step in the EM algorithm for a GMM
+    X is a numpy.ndarray of shape (n, d) containing the data set
+    g is a numpy.ndarray of shape (k, n) containing the
+        posterior probabilities for each data point in each cluster
 
-    X: numpy.ndarray (n, d) containing the dataset
-        - n no. of data points
-        - d no. of dimensions for each data point
-    g: numpy.ndarray (k, n) containing the posterior
-        probabilities for each data point in each cluster
-
-    return:
-        - pi: numpy.ndarray (k,) containing the updated priors for each cluster
-        - m: numpy.ndarray (k, d) has updated centroid means for each cluster
-        - S: numpy.ndarray (k, d, d) updated cov matrices for each cluster
+    Returns: pi, m, S, or None, None, None on failure
+        pi is a numpy.ndarray of shape (k,)
+            containing the updated priors for each cluster
+        m is a numpy.ndarray of shape (k, d)
+            containing the updated centroid means for each cluster
+        S is a numpy.ndarray of shape (k, d, d)
+            containing the updated covariance matrices for each cluster
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None

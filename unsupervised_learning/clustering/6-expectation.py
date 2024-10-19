@@ -1,40 +1,48 @@
 #!/usr/bin/env python3
-
-"""
-This module contains a function that calculates
-probability density function of a Gaussian distribution
-"""
+"""Calculating the expectation step in the EM algorithm for a GMM"""
 
 import numpy as np
+pdf = __import__('5-pdf').pdf
 
 
-def pdf(X, m, S):
+def expectation(X, pi, m, S):
     """
-    initializes variables for a Gaussian Mixture Model
+    Function that calculates the expectation step in the EM algorithm for a GMM
 
-    X: numpy.ndarray (n, d) containing the dataset
-        - n no. of data points
-        - d no. of dimensions for each data point
-    m: numpy.ndarray (d,) mean of the distribution
-    S: numpy.ndarray (d, d) covariance matrix of the distribution
+    X is a numpy.ndarray of shape (n, d) containing the data set
+    pi is a numpy.ndarray of shape (k,) containing the
+        priors for each cluster
+    m is a numpy.ndarray of shape (k, d) containing the
+        centroid means for each cluster
+    S is a numpy.ndarray of shape (k, d, d) containing the
+        covariance matrices for each cluster
 
-    return:
-        - P: numpy.ndarray (n,) the PDF values for each data point
+    Returns: g, l, or None, None on failure
+        g is a numpy.ndarray of shape (k, n) containing the
+            posterior probabilities for each data point in each cluster
+        l is the total log likelihood
     """
-    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None
-    if not isinstance(m, np.ndarray) or len(m.shape) != 1:
-        return None
-    if not isinstance(S, np.ndarray) or len(S.shape) != 2:
-        return None
+    if not isinstance(X, np.ndarray) or not isinstance(pi, np.ndarray)\
+        or not isinstance(m, np.ndarray) or not isinstance(S, np.ndarray)\
+        or X.ndim != 2 or pi.ndim != 1 or m.ndim != 2 or S.ndim != 3\
+        or pi.shape[0] != m.shape[0] or pi.shape[0] != S.shape[0]\
+        or X.shape[1] != m.shape[1] or X.shape[1] != S.shape[1]\
+        or S.shape[1] != S.shape[2] or np.any(np.linalg.det(S) == 0)\
+            or not np.isclose(pi.sum(), 1):
+        return None, None
+
+    k = pi.shape[0]
     n, d = X.shape
-    if d != m.shape[0] or d != S.shape[0] or d != S.shape[1]:
-        return None
-    S_det = np.linalg.det(S)
-    S_inv = np.linalg.inv(S)
-    fac = 1 / np.sqrt(((2 * np.pi) ** d) * S_det)
-    X_m = X - m
-    X_m_dot = np.dot(X_m, S_inv)
-    X_m_dot_X_m = np.sum(X_m_dot * X_m, axis=1)
-    P = fac * np.exp(-0.5 * X_m_dot_X_m)
-    return np.maximum(P, 1e-300)
+    g = np.empty((k, n))
+
+    for i in range(k):
+        likelihood = pdf(X, m[i], S[i])
+        prior = pi[i]  # (1,)
+        intersection = prior * likelihood
+        g[i] = intersection
+
+    marginal = np.sum(g, axis=0, keepdims=True)
+    g /= marginal
+
+    log = np.sum(np.log(np.sum(marginal, axis=0)), axis=0)
+    return g, log

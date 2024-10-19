@@ -21,10 +21,10 @@ def initialize(X, k):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None
-    if not isinstance(k, int) or k <= 0:
+    if not isinstance(k, int) or k < 1:
         return None, None, None
-    n, d = X.shape
+    _, d = X.shape
     pi = np.ones(k) / k
-    m, _ = kmeans(X, k)
+    m = kmeans(X, k)[0]
     S = np.tile(np.identity(d), (k, 1, 1))
     return pi, m, S
