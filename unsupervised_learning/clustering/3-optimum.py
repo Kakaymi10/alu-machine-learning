@@ -12,14 +12,14 @@ variance = __import__('2-variance').variance
 
 def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     """
-    calculates intra-cluster variance for a dataset
+    Calculates intra-cluster variance for a dataset.
 
     X: numpy.ndarray (n, d) containing the dataset
-        - n no. of data points
-        - d no. of dimensions for each data point
-    kmin: positive integer - the minimum no. of clusters
-    kmax: positive integer - the maximum no. of clusters
-    iterations: +ve(int) - max no. of iterations performed
+        - n: number of data points
+        - d: number of dimensions for each data point
+    kmin: positive integer - the minimum number of clusters
+    kmax: positive integer - the maximum number of clusters
+    iterations: positive integer - max number of iterations performed
 
     return:
         - results: list containing the results of the
@@ -27,6 +27,7 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
         - d_vars: list containing the difference in variance
         from the smallest cluster size for each cluster size
     """
+    # Check input validity
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None
     if not isinstance(kmin, int) or kmin <= 0:
@@ -42,27 +43,22 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
 
     results = []
     d_vars = []
-    var = float('inf')
-    
+    variances = np.zeros(kmax - kmin + 1)  # Store variances for each k
+
+    # Single loop to compute the K-means and variance
     for k in range(kmin, kmax + 1):
         C, clss = kmeans(X, k, iterations)
-        
-        # Check if kmeans returned valid results
+
+        # Ensure kmeans returned valid results
         if C is None or clss is None:
             print(f"Warning: kmeans failed for k={k}")
             continue
         
         results.append((C, clss))
-        new_var = variance(X, C)
-        
-        # Check if variance calculation returned valid result
-        if new_var is None:
-            print(f"Warning: variance returned None for k={k}")
-            continue
-        
-        if k == kmin:
-            var = new_var
-        
-        d_vars.append(var - new_var)
+        variances[k - kmin] = variance(X, C)  # Store the variance for this k
 
-    return results, d_vars
+    # Compute differences in variance based on the smallest variance found
+    min_variance = np.min(variances[variances > 0])  # Find minimum positive variance
+    d_vars = min_variance - variances
+
+    return results, d_vars.tolist()  # Convert d_vars to list for consistent return type
