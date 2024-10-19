@@ -20,7 +20,8 @@ def kmeans(X, k, iterations=1000):
             - clss (numpy.ndarray): Cluster index for each data
             point of shape (n,).
     """
-    if not (isinstance(X, np.ndarray) and X.ndim == 2 and isinstance(k, int) and k > 0):
+    if not (isinstance(X, np.ndarray) and X.ndim == 2
+            and isinstance(k, int) and k > 0):
         return None, None
     if not (isinstance(iterations, int) and iterations > 0):
         return None, None
@@ -31,7 +32,7 @@ def kmeans(X, k, iterations=1000):
 
     for _ in range(iterations):
         clss = np.argmin(np.linalg.norm(X[:, None] - C, axis=-1), axis=-1)
-        new_C = np.array([X[clss == i].mean(axis=0) if np.any(clss == i) 
+        new_C = np.array([X[clss == i].mean(axis=0) if np.any(clss == i)
                           else np.random.uniform(low, high, size=d) 
                           for i in range(k)])
 
