@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Performs PCA on a dataset using SVD."""
 
+
 import numpy as np
+
 
 def pca(X, var=0.95):
     """
@@ -12,8 +14,9 @@ def pca(X, var=0.95):
         var (float): Fraction of variance to retain (default is 0.95).
 
     Returns:
-        W (numpy.ndarray): Weight matrix of shape (d, nd) that projects X 
-                           to the new nd-dimensional space while maintaining the specified variance.
+        W (numpy.ndarray): Weight matrix of shape (d, nd) that projects X
+                           to the new nd-dimensional space while
+                           maintaining the specified variance.
     """
     # Perform SVD: X = U * S * V.T
     _, s, Vt = np.linalg.svd(X, full_matrices=False)
