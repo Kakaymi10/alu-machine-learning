@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Performing K-means on a dataset"""
 
+
 import numpy as np
+
 
 def kmeans(X, k, iterations=1000):
     """
@@ -15,7 +17,8 @@ def kmeans(X, k, iterations=1000):
     Returns:
         tuple: (C, clss) or (None, None) on failure.
             - C (numpy.ndarray): Centroid means of shape (k, d).
-            - clss (numpy.ndarray): Cluster index for each data point of shape (n,).
+            - clss (numpy.ndarray): Cluster index for each data
+            point of shape (n,).
     """
     if not (isinstance(X, np.ndarray) and X.ndim == 2 and isinstance(k, int) and k > 0):
         return None, None
@@ -31,7 +34,7 @@ def kmeans(X, k, iterations=1000):
         new_C = np.array([X[clss == i].mean(axis=0) if np.any(clss == i) 
                           else np.random.uniform(low, high, size=d) 
                           for i in range(k)])
-        
+
         if np.allclose(C, new_C):
             break
         C = new_C
