@@ -2,77 +2,54 @@
 """Finding the best number of clusters for a GMM using the Bayesian Information Criterion"""
 
 import numpy as np
-expectation_maximization = __import__('8-EM').expectation_maximization
+# Import the necessary functions from their respective modules
+initialize = __import__('4-initialize').initialize
+expectation = __import__('6-expectation').expectation
+maximization = __import__('7-maximization').maximization
 
-
-def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
-    """Function that finds the best number of clusters for a GMM using the Bayesian Information Criterion
-    
-    X is a numpy.ndarray of shape (n, d) containing the data set
-    kmin is a positive integer containing the
-        minimum number of clusters to check for (inclusive)
-    kmax is a positive integer containing the
-        maximum number of clusters to check for (inclusive)
-        If kmax is None, kmax should be set to the
-            maximum number of clusters possible
-    iterations is a positive integer containing
-        the maximum number of iterations for the EM algorithm
-
-    tol is a non-negative float containing the
-        tolerance for the EM algorithm
-    verbose is a boolean that determines if the EM algorithm
-        should print information to the standard output
-
-    Returns: best_k, best_result, l, b, or None, None, None, None on failure
-    best_k is the best value for k based on its BIC
-    best_result is tuple containing pi, m, S
-        pi is a numpy.ndarray of shape (k,) containing the cluster
-            priors for the best number of clusters
-        m is a numpy.ndarray of shape (k, d) containing the centroid
-            means for the best number of clusters
-        S is a numpy.ndarray of shape (k, d, d) containing the
-            covariance matrices for the best number of clusters
-        l is a numpy.ndarray of shape (kmax - kmin + 1) containing the
-            log likelihood for each cluster size tested
-        b is a numpy.ndarray of shape (kmax - kmin + 1) containing the
-            BIC value for each cluster size tested
-        Use: BIC = p * ln(n) - 2 * l
-
-        p is the number of parameters required for the model :
-            number-of-parameters-to-be-learned-in-k-guassian-mixture-model
-        n is the number of data points used to create the model
-        l is the log likelihood of the model
+def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     """
-    if kmax is None and isinstance(X, np.ndarray) and X.ndim == 2:
-        kmax = X.shape[0]
-
-    if (not isinstance(X, np.ndarray) or X.ndim != 2 or
-            not isinstance(kmin, int) or kmin <= 0 or kmin > X.shape[0] or
-            not isinstance(kmax, int) or kmax <= 0 or kmax <= kmin or
-            kmax > X.shape[0] or not isinstance(iterations, int) or
-            iterations <= 0 or not isinstance(tol, float) or tol < 0 or
-            not isinstance(verbose, bool)):
-        return None, None, None, None
-
+    Performs the Expectation-Maximization (EM) algorithm for a Gaussian Mixture Model (GMM).
+    
+    Parameters:
+    - X: numpy.ndarray of shape (n, d) containing the dataset
+    - k: positive integer, number of clusters
+    - iterations: positive integer, maximum number of iterations
+    - tol: non-negative float, tolerance for log likelihood for early stopping
+    - verbose: boolean, if True prints log likelihood every 10 iterations and at the end
+    
+    Returns:
+    - pi: numpy.ndarray of shape (k,) containing the priors for each cluster
+    - m: numpy.ndarray of shape (k, d) containing the centroid means for each cluster
+    - S: numpy.ndarray of shape (k, d, d) containing the covariance matrices for each cluster
+    - g: numpy.ndarray of shape (k, n) containing the probabilities for each data point in each cluster
+    - l: log likelihood of the model
+    """
     n, d = X.shape
-    logll = np.empty((kmax - kmin + 1))
-    bic = np.empty((kmax - kmin + 1))
-    results = [()] * (kmax - kmin + 1)
+    
+    # Initialize parameters
+    pi, m, S = initialize(X, k)
+    
+    l = 0  # Initial log likelihood
+    for i in range(iterations):
+        # E-step
+        g, l_new = expectation(X, pi, m, S)
+        
+        # M-step
+        pi, m, S = maximization(X, g)
+        
+        # Check for convergence
+        if abs(l_new - l) <= tol:
+            break
+        
+        l = l_new
+        
+        # Verbose logging
+        if verbose and i % 10 == 0:
+            print(f"Log Likelihood after {i} iterations: {l:.5f}")
+    
+    # Final log likelihood print
+    if verbose:
+        print(f"Log Likelihood after {i} iterations: {l:.5f}")
 
-    for k in range(kmin, kmax + 1):
-        idx = k - kmin
-        pi, m, S, g, log = expectation_maximization(
-            X, k, iterations, tol, verbose
-        )
-
-        logll[idx] = log
-        results[idx] = (pi, m, S)
-
-        p = (k * d) + (k * (d * (d + 1) / 2)) + (k - 1)
-        BIC = (p * np.log(n)) - (2 * log)
-        bic[idx] = BIC
-
-    best_result = results[np.argmin(bic)]
-    best_k = np.argmin(bic) + kmin
-
-    return best_k, best_result, logll, bic
+    return (pi, m, S, g, l) if l > -np.inf else (None, None, None, None, None)
