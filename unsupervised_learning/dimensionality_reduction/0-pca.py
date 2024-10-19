@@ -34,6 +34,6 @@ def pca(X, var=0.95):
     nd = np.argmax(cumulative_variance >= var) + 1
 
     # Step 6: Select the top nd eigenvectors (the weight matrix W)
-    W = sorted_eigenvectors[:, :nd]
+    W = sorted_eigenvectors
 
     return W
