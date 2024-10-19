@@ -17,10 +17,10 @@ def kmeans(X, k, iterations=1000):
             - C (numpy.ndarray): Centroid means of shape (k, d).
             - clss (numpy.ndarray): Cluster index for each data point of shape (n,).
     """
-    # Validate input types and values
-    if not isinstance(X, np.ndarray) or X.ndim != 2 or not isinstance(k, int) or k <= 0:
+    # Validate input
+    if not isinstance(X, np.ndarray) or X.ndim != 2:
         return None, None
-    if not isinstance(iterations, int) or iterations <= 0:
+    if not isinstance(k, int) or k <= 0 or not isinstance(iterations, int) or iterations <= 0:
         return None, None
 
     n, d = X.shape
@@ -30,14 +30,18 @@ def kmeans(X, k, iterations=1000):
     C = np.random.uniform(low, high, size=(k, d))
 
     for _ in range(iterations):
-        # Assign each data point to the nearest centroid
+        # Assign data points to the nearest centroid
         distances = np.linalg.norm(X[:, None] - C, axis=-1)
         clss = np.argmin(distances, axis=-1)
 
-        # Update centroids based on cluster assignments
-        new_C = np.array([X[clss == c].mean(axis=0) if np.any(clss == c) 
-                          else np.random.uniform(low, high, size=(d,)) 
-                          for c in range(k)])
+        # Update centroids (one loop for k clusters)
+        new_C = np.empty_like(C)
+        for c in range(k):
+            points = X[clss == c]
+            if len(points) == 0:
+                new_C[c] = np.random.uniform(low, high, size=(d,))
+            else:
+                new_C[c] = points.mean(axis=0)
 
         # Check for convergence
         if np.allclose(C, new_C):
@@ -47,4 +51,3 @@ def kmeans(X, k, iterations=1000):
     # Final cluster assignments
     clss = np.argmin(np.linalg.norm(X[:, None] - C, axis=-1), axis=-1)
     return C, clss
-
