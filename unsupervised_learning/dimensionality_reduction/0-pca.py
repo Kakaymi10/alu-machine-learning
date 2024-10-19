@@ -17,24 +17,24 @@ def pca(X, var=0.95):
     - W: numpy.ndarray of shape (d, nd), the projection matrix
          where nd is the new dimensionality of the transformed X.
     '''
-    # Compute covariance matrix
-    cov = np.cov(X, rowvar=False)  # rowvar=False ensures columns are variables
+    # Step 1: Compute the covariance matrix of X
+    cov = np.cov(X, rowvar=False)
 
-    # Get eigenvalues (w) and eigenvectors (v)
+    # Step 2: Compute eigenvalues and eigenvectors
     w, v = np.linalg.eig(cov)
 
-    # Sort eigenvalues and eigenvectors in descending order
+    # Step 3: Sort eigenvalues and eigenvectors in descending order
     idx = np.argsort(w)[::-1]
     w = w[idx]
     v = v[:, idx]
 
-    # Calculate cumulative explained variance
+    # Step 4: Compute cumulative explained variance
     cum_exp_var = np.cumsum(w) / np.sum(w)
 
-    # Determine the number of dimensions needed to maintain 'var' variance
+    # Step 5: Find the minimum number of dimensions needed to retain the desired variance
     d = np.argmax(cum_exp_var >= var) + 1
 
-    # Create the projection matrix using the top 'd' eigenvectors
+    # Step 6: Create the projection matrix W using the top 'd' eigenvectors
     W = v[:, :d]
     
     return W
