@@ -33,7 +33,7 @@ def kmeans(X, k, iterations=1000):
     for _ in range(iterations):
         clss = np.argmin(np.linalg.norm(X[:, None] - C, axis=-1), axis=-1)
         new_C = np.array([X[clss == i].mean(axis=0) if np.any(clss == i)
-                          else np.random.uniform(low, high, size=d) 
+                          else np.random.uniform(low, high, size=d)
                           for i in range(k)])
 
         if np.allclose(C, new_C):
