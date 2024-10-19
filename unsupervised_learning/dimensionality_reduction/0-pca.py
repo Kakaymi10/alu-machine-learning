@@ -7,7 +7,8 @@ import numpy as np
 
 def pca(X, var=0.95):
     """
-    Performs PCA on the given dataset to retain the specified fraction of variance.
+    Performs PCA on the given dataset to
+    retain the specified fraction of variance.
 
     Parameters:
         X (numpy.ndarray): Shape (n, d), dataset with n samples and d features.
