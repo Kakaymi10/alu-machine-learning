@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Calculating a GMM from a dataset"""
 
+
 import sklearn.mixture
 
 
