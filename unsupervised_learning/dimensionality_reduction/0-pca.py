@@ -1,29 +1,34 @@
-#!/usr/bin/env python3
-'''
-0. PCA
-'''
-
-
 import numpy as np
 
-
 def pca(X, var=0.95):
-    '''
-    Function that performs PCA on a dataset
-    '''
-    
-    # Covariance matrix
-    cov = np.cov(X.T)
-    # Eigenvalues and eigenvectors
-    w, v = np.linalg.eig(cov)
-    # Sort eigenvalues
-    w_sort = np.sort(w)[::-1]
-    # Explained variance
-    exp_var = w_sort / np.sum(w)
-    # Cumulative explained variance
-    cum_exp_var = np.cumsum(exp_var)
-    # Number of dimensions to keep
-    d = np.argwhere(cum_exp_var >= var)[0, 0]
-    # Projection matrix
-    W = v[:, :d + 1]
+    """
+    Performs PCA on a dataset X to maintain a specified fraction of the variance.
+
+    Parameters:
+    X (numpy.ndarray): Shape (n, d) dataset with zero-centered dimensions.
+    var (float): Fraction of the variance to maintain (default is 0.95).
+
+    Returns:
+    numpy.ndarray: Weight matrix W of shape (d, nd).
+    """
+    # Step 1: Compute the covariance matrix
+    cov_matrix = np.cov(X, rowvar=False)
+
+    # Step 2: Compute eigenvalues and eigenvectors
+    eigenvalues, eigenvectors = np.linalg.eigh(cov_matrix)
+
+    # Step 3: Sort eigenvalues and corresponding eigenvectors in descending order
+    sorted_indices = np.argsort(eigenvalues)[::-1]
+    eigenvalues = eigenvalues[sorted_indices]
+    eigenvectors = eigenvectors[:, sorted_indices]
+
+    # Step 4: Calculate cumulative variance ratio
+    cumulative_variance = np.cumsum(eigenvalues) / np.sum(eigenvalues)
+
+    # Step 5: Select the number of components to maintain desired variance
+    num_components = np.argmax(cumulative_variance >= var) + 1
+
+    # Step 6: Construct the weight matrix W with selected eigenvectors
+    W = eigenvectors[:, :num_components]
+
     return W
