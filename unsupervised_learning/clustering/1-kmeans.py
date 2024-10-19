@@ -1,12 +1,23 @@
 #!/usr/bin/env python3
-'''K-means'''
+'''K-means clustering'''
 
 
 import numpy as np
-# Dynamically import the initialize function
-module_name = '0-initialize'
-initialize = __import__(module_name).initialize
 
+
+def initialize(X, k):
+    """Initialize cluster centroids for K-means using uniform distribution."""
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None
+    if not isinstance(k, int) or k <= 0:
+        return None
+
+    n, d = X.shape
+    min_vals = X.min(axis=0)
+    max_vals = X.max(axis=0)
+
+    centroids = np.random.uniform(min_vals, max_vals, size=(k, d))
+    return centroids
 
 def kmeans(X, k, iterations=1000):
     """Performs K-means clustering on a dataset."""
