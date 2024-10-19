@@ -16,7 +16,7 @@ def pca(X, var=0.95):
         numpy.ndarray: The weight matrix W of shape (d, nd), where nd is the new dimensionality.
     """
     # Step 1: Compute the covariance matrix
-    cov_matrix = np.cov(X, rowvar=False)
+    cov_matrix = np.cov(X.T, rowvar=False)
     
     # Step 2: Get eigenvalues and eigenvectors of the covariance matrix
     eigenvalues, eigenvectors = np.linalg.eigh(cov_matrix)
