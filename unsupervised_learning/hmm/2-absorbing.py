@@ -34,7 +34,8 @@ def absorbing(P):
     for i in range(n):
         if i not in absorbing_states:
             # Check if there's a non-zero probability to an absorbing state
-            if not any(reachability_matrix[i, j] > 0 for j in absorbing_states):
+            if not any(reachability_matrix[i, j] > 0
+                       for j in absorbing_states):
                 return False
 
     return True
