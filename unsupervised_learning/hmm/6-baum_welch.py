@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """ baum_welch algorithm"""
 
-
 import numpy as np
 
 
