@@ -33,4 +33,4 @@ def regular(P):
     x = np.linalg.solve(P_t, b)
     x = x / np.sum(x)
 
-    return x
+    return x.reshape(1, n)
