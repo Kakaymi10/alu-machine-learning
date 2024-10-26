@@ -28,7 +28,10 @@ def backward(Observation, Emission, Transition, Initial):
         for i in range(N):
             total = 0
             for j in range(N):
-                total += Transition[i, j] * Emission[j, Observation[t + 1]] * B[j, t + 1]
+                a = Transition[i, j]
+                b = Emission[j, Observation[t + 1]]
+                c = B[j, t + 1]
+                total += a * b * c
             B[i, t] = total
 
     # Likelihood of the observations given the model
