@@ -5,86 +5,93 @@ import numpy as np
 
 
 def forward(Observation, Emission, Transition, Initial):
-    """ forward function based on task3 """
-    # Hidden States
-    N = Transition.shape[0]
-
-    # Observations
+    """
+    Performs the forward algorithm for a hidden Markov model.
+    """
     T = Observation.shape[0]
+    N, M = Emission.shape
 
-    # F == alpha
-    # initialization α1(j) = πjbj(o1) 1 ≤ j ≤ N
     F = np.zeros((N, T))
     F[:, 0] = Initial.T * Emission[:, Observation[0]]
 
-    # formula shorturl.at/amtJT
-    # Recursion αt(j) == ∑Ni=1 αt−1(i)ai jbj(ot); 1≤j≤N,1<t≤T
     for t in range(1, T):
         for n in range(N):
-            Transitions = Transition[:, n]
-            Emissions = Emission[n, Observation[t]]
-            F[n, t] = np.sum(Transitions * F[:, t - 1]
-                             * Emissions)
+            F[n, t] = np.sum(F[:, t-1] *
+                             Transition[:, n] *
+                             Emission[n, Observation[t]])
 
-    # Termination P(O|λ) == ∑Ni=1 αT (i)
-    # P = np.sum(F[:, -1])
-    return F
+    P = np.sum(F[:, -1])
+    return P, F
 
 
 def backward(Observation, Emission, Transition, Initial):
-    """ backward function based on task5 """
+    """
+    Performs the backward algorithm for a hidden Markov model
+    """
+    # Number of hidden states
+    N = Transition.shape[0]
 
-    T = Observation.shape[0]
-    N, M = Emission.shape
-    beta = np.zeros((N, T))
-    beta[:, T - 1] = np.ones(N)
+    # Number of observations
+    T = len(Observation)
 
+    # Backward probabilities matrix
+    B = np.zeros((N, T))
+
+    # Initialization step: at time T-1, the backward probabilities are all 1
+    B[:, T - 1] = 1
+
+    # Recursion step: fill in the backward probabilities
     for t in range(T - 2, -1, -1):
-        for n in range(N):
-            Transitions = Transition[n, :]
-            Emissions = Emission[:, Observation[t + 1]]
-            beta[n, t] = np.sum((Transitions * beta[:, t + 1]) * Emissions)
+        for i in range(N):
+            total = 0
+            for j in range(N):
+                a = Transition[i, j]
+                b = Emission[j, Observation[t + 1]]
+                c = B[j, t + 1]
+                total += a * b * c
+            B[i, t] = total
 
-    # P = np.sum(Initial[:, 0] * Emission[:, Observation[0]] * beta[:, 0])
-    return beta
+    # Likelihood of the observations given the model
+    P = 0
+    for i in range(N):
+        P += Initial[i, 0] * Emission[i, Observation[0]] * B[i, 0]
+
+    return P, B
 
 
 def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     """
-    Baum-Welch algorithm for a hidden markov model
+    Function that performs the Baum-Welch algorithm for a hidden Markov model
     """
-    if iterations == 1000:
-        iterations = 385
-    N, M = Emission.shape
+    N = Transition.shape[0]
+    M = Emission.shape[1]
     T = Observations.shape[0]
 
-    for n in range(iterations):
-        alpha = forward(Observations, Emission, Transition, Initial)
-        beta = backward(Observations, Emission, Transition, Initial)
+    for _ in range(iterations):
+        _, F = forward(Observations, Emission, Transition, Initial)
+        _, B = backward(Observations, Emission, Transition, Initial)
 
         xi = np.zeros((N, N, T - 1))
         for t in range(T - 1):
-            denominator = np.dot(np.dot(alpha[:, t].T, Transition) *
-                                 Emission[:, Observations[t + 1]].T,
-                                 beta[:, t + 1])
+            denominator = np.dot(np.dot(F[:, t].T, Transition) *
+                                 Emission[:, Observations[t + 1]] *
+                                 B[:, t + 1].T, 1)
             for i in range(N):
-                numerator = alpha[i, t] * Transition[i] * \
-                            Emission[:, Observations[t + 1]].T * \
-                            beta[:, t + 1].T
+                numerator = F[i, t] * Transition[i] * \
+                    Emission[:, Observations[t + 1]] * B[:, t + 1].T
                 xi[i, :, t] = numerator / denominator
 
         gamma = np.sum(xi, axis=1)
-        Transition = np.sum(xi, 2) / np.sum(gamma,
-                                            axis=1).reshape((-1, 1))
+        Transition = np.sum(xi, 2) / np.sum(gamma, axis=1).reshape((-1, 1))
 
-        # adding additional T element in gamma
-
-        gamma = np.hstack((gamma, np.sum(xi[:, :, T - 2],
-                                         axis=0).reshape((-1, 1))))
+        # Add the last gamma
+        gamma = np.hstack((gamma,
+                           np.sum(xi[:, :, T - 2], axis=0).reshape((-1, 1))))
 
         denominator = np.sum(gamma, axis=1)
-        for s in range(M):
-            Emission[:, s] = np.sum(gamma[:, Observations == s],
-                                    axis=1)
+        for i in range(M):
+            Emission[:, i] = np.sum(gamma[:, Observations == i], axis=1)
+
         Emission = np.divide(Emission, denominator.reshape((-1, 1)))
+
     return Transition, Emission
