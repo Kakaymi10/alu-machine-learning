@@ -8,6 +8,10 @@ import numpy as np
 
 
 def viterbi(Observation, Emission, Transition, Initial):
+    '''
+    Determines the most likely sequence of
+    hidden states for a hidden Markov model
+    '''
     # Number of hidden states
     N = Transition.shape[0]
 
@@ -47,7 +51,7 @@ def viterbi(Observation, Emission, Transition, Initial):
         if V[i, T - 1] > best_path_prob:
             best_path_prob = V[i, T - 1]
             best_last_state = i
- 
+
     # Backtrack to find the best path
     path = [0] * T
     path[T - 1] = best_last_state
