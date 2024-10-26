@@ -22,11 +22,11 @@ def regular(P):
         return None
     if not np.all(np.isclose(P.sum(axis=1), 1)):
         return None
-    
+
     # Step 2: Calculate the steady state probabilities
     n = P.shape[0]
-    I = np.eye(n)
-    P_t = np.transpose(P) - I
+    Im = np.eye(n)
+    P_t = np.transpose(P) - Im
     P_t[-1] = np.ones(n)
     b = np.zeros(n)
     b[-1] = 1
