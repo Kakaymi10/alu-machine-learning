@@ -29,7 +29,9 @@ class GaussianProcess:
 
     def kernel(self, X1, X2):
         """
-        Calculate the covariance kernel matrix between two matrices using RBF kernel.
+        Calculate the covariance kernel matrix
+        between two matrices
+        using RBF kernel.
 
         Parameters:
         - X1: numpy.ndarray of shape (m, 1)
