@@ -3,7 +3,6 @@
 
 
 import tensorflow as tf
-import numpy as np
 
 
 def autoencoder(input_dims, hidden_layers, latent_dims):
