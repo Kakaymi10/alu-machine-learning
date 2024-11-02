@@ -4,7 +4,7 @@ Defines function that creates a variational autoencoder
 """
 
 
-import tensorflow.keras as keras
+from tensorflow import keras
 
 
 def autoencoder(input_dims, hidden_layers, latent_dims):
