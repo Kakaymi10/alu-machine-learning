@@ -12,15 +12,7 @@ This project consists of two scripts:
 
 ---
 
-## **Installation**
 
-To run the project, ensure you have the following dependencies installed:
-
-```bash
-pip install keras tensorflow gymnasium[atari, accept-rom-license]
-```
-
----
 
 ## **Task 1: Training Script (`train.py`)**
 
