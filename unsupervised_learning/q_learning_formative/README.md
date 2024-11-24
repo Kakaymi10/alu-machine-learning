@@ -23,7 +23,7 @@ Key features:
 - **Learning Rate**: 0.0001
 - **Exploration Rate**: Decays over time from 0.666 to 0.657
 - **Total Episodes**: 3,900+
-- **Training Time**: 280 minutes
+- **Training Time**: 63 minutes
 - **Loss**: Average loss over episodes, fluctuates during training
 - **Updates**: 8,765 updates during training
 - **FPS**: 128
