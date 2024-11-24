@@ -1,6 +1,3 @@
-Sure, here’s a README for your project based on the notebook content and your previous project details:
-
----
 
 # **Breakout DQN Model for Atari Environment**
 
