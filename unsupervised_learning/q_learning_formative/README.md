@@ -38,7 +38,7 @@ The model was trained with the following performance metrics over multiple rollo
 | **Exploration Rate** | 0.657     |
 | **Loss** (last recorded)  | 0.021    |
 | **Learning Rate**    | 0.0001    |
-| **Training Time**    | 280 mins  |
+| **Training Time**    | 63 mins  |
 | **Updates**          | 8,765     |
 
 ### Training Process:
