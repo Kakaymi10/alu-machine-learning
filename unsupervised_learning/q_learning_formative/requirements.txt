@@ -1,0 +1,17 @@
+# Core Dependencies
+tensorflow==2.13.0
+numpy==1.24.4
+matplotlib==3.8.0
+
+# Gym and Atari Environment
+gymnasium==0.29.1
+ale-py==0.8.1
+
+# Stable-Baselines and Wrappers
+stable-baselines3==1.7.0
+
+
+
+# Additional Utilities 
+pillow==10.0.0
+scipy==1.11.3
