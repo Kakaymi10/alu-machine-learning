@@ -1,6 +1,6 @@
 # alu-machine-learning
 
-Welcome to the "alu-machine-learning" repository! This repository serves as a collection of solutions for the intranet project within the context of the Machine Learning specialization (Y2T3) at the African Leadership University.
+Welcome to the "alu-machine-learning" repository! This repository serves as a collection of solutions for the intranet project within the context of the Machine Learning specialization at the African Leadership University.
 
 ## Overview
 
